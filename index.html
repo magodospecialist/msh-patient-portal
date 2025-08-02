@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Satisfaction Survey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .survey-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .logo h1 {
+            color: #333;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo p {
+            color: #666;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+        }
+        
+        .question h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+            text-align: center;
+        }
+        
+        .rating-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .rating-btn {
+            flex: 1;
+            padding: 15px 5px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 24px;
+            position: relative;
+        }
+        
+        .rating-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .rating-btn.selected {
+            border-color: #4CAF50;
+            background: #f8fff8;
+            transform: scale(1.05);
+        }
+        
+        .rating-btn .emoji {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .rating-btn .label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .rating-btn.selected .label {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+        
+        .rating-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .comment-section {
+            margin-bottom: 25px;
+        }
+        
+        .comment-section label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .comment-section textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .comment-section textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .thank-you {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .thank-you h2 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        
+        .thank-you p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .checkmark {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #4CAF50;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .checkmark::after {
+            content: '✓';
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 480px) {
+            .survey-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .rating-btn {
+                padding: 12px 3px;
+                font-size: 20px;
+            }
+            
+            .rating-btn .label {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="survey-container">
+        <div class="survey-form" id="surveyForm">
+            <div class="logo">
+                <h1>Magodo Specialist Hospital Ltd.</h1>
+                <p>We value your feedback!</p>
+            </div>
+            
+            <div class="question">
+                <h3>How satisfied are you with our service?</h3>
+                <div class="rating-container" id="satisfactionRating">
+                    <button type="button" class="rating-btn" data-value="1">
+                        <span class="emoji">😞</span>
+                        <span class="label">Very Poor</span>
+                    </button>
+                    <button type="button" class="rating-btn" data-value="2">
+                        <span class="emoji">😐</span>
+                        <span class="label">Poor</span>
+                    </button>
+                    <button type="button" class="rating-btn" data-value="3">
+                        <span class="emoji">🙂</span>
+                        <span class="label">Good</span>
+                    </button>
+                    <button type="button" class="rating-btn" data-value="4">
+                        <span class="emoji">😊</span>
+                        <span class="label">Very Good</span>
+                    </button>
+                    <button type="button" class="rating-btn" data-value="5">
+                        <span class="emoji">🤩</span>
+                        <span class="label">Excellent</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="question">
+                <h3>How likely are you to recommend us?</h3>
+                <div class="rating-container" id="recommendRating">
+                    <button type="button" class="rating-btn" data-value="1">
+                        <span class="emoji">👎</span>
+                        <span class="label">Not at all</span>
+                    </button>
+                    <button type="button" class="rating-btn" data-value="2">
+                        <span class="emoji">😕</span>
+                        <span class="label">Unlikely</span>
+                    </button>
+                    <button type="button" class="rating-btn" data-value="3">
+                        <span class="emoji">😐</span>
+                        <span class="label">Maybe</span>
+                    </button>
+                    <button type="button" class="rating-btn" data-value="4">
+                        <span class="emoji">👍</span>
+                        <span class="label">Likely</span>
+                    </button>
+                    <button type="button" class="rating-btn" data-value="5">
+                        <span class="emoji">🔥</span>
+                        <span class="label">Definitely</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="comment-section">
+                <label for="comments">Additional Comments (Optional)</label>
+                <textarea id="comments" placeholder="Tell us more about your experience..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                Submit Feedback
+            </button>
+        </div>
+        
+        <div class="thank-you" id="thankYou">
+            <div class="checkmark"></div>
+            <h2>Thank You!</h2>
+            <p>Your feedback has been submitted successfully. We appreciate you taking the time to help us improve our service.</p>
+        </div>
+    </div>
+
+    <script>
+        let satisfactionRating = null;
+        let recommendRating = null;
+        
+        // Handle rating button clicks
+        document.querySelectorAll('.rating-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const container = this.parentElement;
+                const containerType = container.id;
+                
+                // Remove selected class from siblings
+                container.querySelectorAll('.rating-btn').forEach(sibling => {
+                    sibling.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked button
+                this.classList.add('selected');
+                
+                // Store the rating value
+                const value = parseInt(this.dataset.value);
+                if (containerType === 'satisfactionRating') {
+                    satisfactionRating = value;
+                } else if (containerType === 'recommendRating') {
+                    recommendRating = value;
+                }
+                
+                // Add haptic feedback for mobile
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+                
+                // Check if submit button should be enabled
+                updateSubmitButton();
+            });
+        });
+        
+        function updateSubmitButton() {
+            const submitBtn = document.getElementById('submitBtn');
+            if (satisfactionRating !== null && recommendRating !== null) {
+                submitBtn.disabled = false;
+            }
+        }
+        
+        // Handle form submission
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const comments = document.getElementById('comments').value;
+            const timestamp = new Date().toISOString();
+            
+            const feedbackData = {
+                satisfaction: satisfactionRating,
+                recommendation: recommendRating,
+                comments: comments,
+                timestamp: timestamp,
+                userAgent: navigator.userAgent
+            };
+            
+            // Here you would typically send the data to your server
+            console.log('Feedback Data:', feedbackData);
+            
+            // For demo purposes, we'll simulate sending data
+            submitFeedback(feedbackData);
+        });
+        
+        function submitFeedback(data) {
+            // Show loading state
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Hide survey form and show thank you message
+                document.getElementById('surveyForm').style.display = 'none';
+                document.getElementById('thankYou').style.display = 'block';
+                
+                // In a real implementation, you would send data to your server here
+                // Example: 
+                // fetch('/api/feedback', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify(data)
+                // });
+                
+                // Or send via WhatsApp API, email service, etc.
+                sendFeedbackNotification(data);
+                
+            }, 1500);
+        }
+        
+        function sendFeedbackNotification(data) {
+            // This is where you'd integrate with your preferred method:
+            
+            // Option 1: Send email via a service like EmailJS
+            // emailjs.send('service_id', 'template_id', data);
+            
+            // Option 2: Send to WhatsApp Business API
+            // sendToWhatsAppAPI(data);
+            
+            // Option 3: Send to your webhook/server
+            // fetch('https://yourserver.com/webhook', {
+            //     method: 'POST',
+            //     body: JSON.stringify(data)
+            // });
+            
+            // For now, we'll just log it
+            console.log('Feedback submitted:', data);
+            
+            // You could also format and copy to clipboard for manual processing
+            const formattedFeedback = formatFeedbackForWhatsApp(data);
+            console.log('WhatsApp format:', formattedFeedback);
+        }
+        
+        function formatFeedbackForWhatsApp(data) {
+            const satisfactionLabels = ['', 'Very Poor', 'Poor', 'Good', 'Very Good', 'Excellent'];
+            const recommendLabels = ['', 'Not at all', 'Unlikely', 'Maybe', 'Likely', 'Definitely'];
+            
+            return `🔔 *New Customer Feedback*
+            
+📊 *Satisfaction:* ${satisfactionLabels[data.satisfaction]} (${data.satisfaction}/5)
+👥 *Recommendation:* ${recommendLabels[data.recommendation]} (${data.recommendation}/5)
+💬 *Comments:* ${data.comments || 'None'}
+⏰ *Time:* ${new Date(data.timestamp).toLocaleString()}`;
+        }
+    </script>
+</body>
+</html>
