@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID'); // Replace with your Google Analytics ID
+    </script>
+    
     <title>Customer Satisfaction Survey</title>
     <style>
         * {
@@ -249,7 +258,7 @@
     <div class="survey-container">
         <div class="survey-form" id="surveyForm">
             <div class="logo">
-                <h1>Magodo Specialist Hospital Ltd.</h1>
+                <h1>Your Business Name</h1>
                 <p>We value your feedback!</p>
             </div>
             
@@ -321,6 +330,14 @@
             <p>Your feedback has been submitted successfully. We appreciate you taking the time to help us improve our service.</p>
         </div>
     </div>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("Z0VMFmiXu1u4xRa9b"); // Replace with your EmailJS public key
+        })();
+    </script>
 
     <script>
         let satisfactionRating = null;
@@ -415,26 +432,23 @@
         }
         
         function sendFeedbackNotification(data) {
-            // This is where you'd integrate with your preferred method:
+            const satisfactionLabels = ['', 'Very Poor', 'Poor', 'Good', 'Very Good', 'Excellent'];
+            const recommendLabels = ['', 'Not at all', 'Unlikely', 'Maybe', 'Likely', 'Definitely'];
             
-            // Option 1: Send email via a service like EmailJS
-            // emailjs.send('service_id', 'template_id', data);
+            // Send email via EmailJS
+            const templateParams = {
+                satisfaction_rating: `${satisfactionLabels[data.satisfaction]} (${data.satisfaction}/5)`,
+                recommendation_score: `${recommendLabels[data.recommendation]} (${data.recommendation}/5)`,
+                comments: data.comments || 'No additional comments',
+                timestamp: new Date(data.timestamp).toLocaleString()
+            };
             
-            // Option 2: Send to WhatsApp Business API
-            // sendToWhatsAppAPI(data);
-            
-            // Option 3: Send to your webhook/server
-            // fetch('https://yourserver.com/webhook', {
-            //     method: 'POST',
-            //     body: JSON.stringify(data)
-            // });
-            
-            // For now, we'll just log it
-            console.log('Feedback submitted:', data);
-            
-            // You could also format and copy to clipboard for manual processing
-            const formattedFeedback = formatFeedbackForWhatsApp(data);
-            console.log('WhatsApp format:', formattedFeedback);
+            emailjs.send('service_vmknsar', 'template_2wpah22', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully!', response.status, response.text);
+                }, function(error) {
+                    console.log('Email failed to send:', error);
+                });
         }
         
         function formatFeedbackForWhatsApp(data) {
