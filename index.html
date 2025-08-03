@@ -661,34 +661,188 @@
             submitBtn.innerHTML = '<span style="opacity: 0.7">Submitting...</span>';
             submitBtn.disabled = true;
             
-            // Simulate API call
+            // Send email with analysis
+            sendFeedbackEmail(data);
+            
+            // Show thank you message after a short delay
             setTimeout(() => {
-                // Hide survey form and show thank you message
                 document.getElementById('surveyForm').style.display = 'none';
                 document.getElementById('thankYou').style.display = 'block';
-                
-                // Send notification
-                sendFeedbackNotification(data);
-                
             }, 1500);
         }
         
-        function sendFeedbackNotification(data) {
+        function analyzeTextFeedback(text) {
+            if (!text || text.trim().length === 0) {
+                return {
+                    score: 3, // Neutral for no comment
+                    sentiment: 'neutral',
+                    keywords: [],
+                    issues: [],
+                    positives: []
+                };
+            }
+            
+            const lowerText = text.toLowerCase();
+            
+            // Define keyword categories with weights
+            const positiveWords = {
+                'excellent': 5, 'amazing': 5, 'outstanding': 5, 'exceptional': 5,
+                'great': 4, 'good': 4, 'wonderful': 4, 'fantastic': 4, 'lovely': 4,
+                'nice': 3, 'okay': 3, 'fine': 3, 'decent': 3,
+                'professional': 4, 'friendly': 4, 'helpful': 4, 'clean': 4,
+                'quick': 3, 'fast': 3, 'efficient': 4, 'caring': 4,
+                'recommend': 4, 'satisfied': 4, 'happy': 4, 'pleased': 4
+            };
+            
+            const negativeWords = {
+                'terrible': 1, 'awful': 1, 'horrible': 1, 'worst': 1,
+                'bad': 2, 'poor': 2, 'disappointing': 2, 'unacceptable': 1,
+                'slow': 2, 'rude': 1, 'unprofessional': 1, 'dirty': 1,
+                'expensive': 2, 'overpriced': 2, 'long wait': 2, 'delayed': 2,
+                'problem': 2, 'issue': 2, 'complaint': 2, 'concern': 2,
+                'dissatisfied': 1, 'unhappy': 2, 'frustrated': 2
+            };
+            
+            const issueKeywords = [
+                'wait', 'waiting', 'delay', 'late', 'slow', 'long time',
+                'rude', 'unfriendly', 'unprofessional', 'dirty', 'unclean',
+                'expensive', 'cost', 'price', 'billing', 'payment',
+                'appointment', 'schedule', 'booking', 'availability'
+            ];
+            
+            // Calculate sentiment score
+            let totalScore = 0;
+            let wordCount = 0;
+            let foundKeywords = [];
+            let issues = [];
+            let positives = [];
+            
+            // Check positive words
+            Object.keys(positiveWords).forEach(word => {
+                if (lowerText.includes(word)) {
+                    totalScore += positiveWords[word];
+                    wordCount++;
+                    foundKeywords.push(word);
+                    positives.push(word);
+                }
+            });
+            
+            // Check negative words
+            Object.keys(negativeWords).forEach(word => {
+                if (lowerText.includes(word)) {
+                    totalScore += negativeWords[word];
+                    wordCount++;
+                    foundKeywords.push(word);
+                }
+            });
+            
+            // Identify specific issues
+            issueKeywords.forEach(issue => {
+                if (lowerText.includes(issue)) {
+                    issues.push(issue);
+                }
+            });
+            
+            // Calculate final score (1-5 scale)
+            let finalScore;
+            if (wordCount === 0) {
+                finalScore = 3; // Neutral if no sentiment words found
+            } else {
+                const averageScore = totalScore / wordCount;
+                finalScore = Math.round(Math.max(1, Math.min(5, averageScore)));
+            }
+            
+            // Determine sentiment label
+            let sentiment;
+            if (finalScore >= 4) sentiment = 'positive';
+            else if (finalScore <= 2) sentiment = 'negative';
+            else sentiment = 'neutral';
+            
+            // Additional scoring based on text length and specificity
+            const lengthBonus = text.length > 50 ? 0.2 : 0; // Bonus for detailed feedback
+            const specificityBonus = issues.length > 0 || positives.length > 0 ? 0.1 : 0;
+            
+            return {
+                score: Math.min(5, finalScore + lengthBonus + specificityBonus),
+                sentiment: sentiment,
+                keywords: foundKeywords,
+                issues: issues,
+                positives: positives,
+                textLength: text.length,
+                isDetailed: text.length > 50
+            };
+        }
+        
+        function sendFeedbackEmail(data) {
             const satisfactionLabels = ['', 'Very Poor', 'Poor', 'Fair', 'Good', 'Excellent'];
             const recommendLabels = ['', 'Never', 'Unlikely', 'Maybe', 'Likely', 'Definitely'];
             
-            // Send email via EmailJS
+            // Analyze text feedback
+            const textAnalysis = analyzeTextFeedback(data.comments);
+            
+            // Calculate overall score (weighted average)
+            const overallScore = (
+                (data.satisfaction * 0.4) + 
+                (data.recommendation * 0.4) + 
+                (textAnalysis.score * 0.2)
+            ).toFixed(1);
+            
+            // Determine priority level
+            let priority = 'Normal';
+            let priorityEmoji = '🟡';
+            if (overallScore <= 2.5) {
+                priority = 'High - Needs Attention';
+                priorityEmoji = '🔴';
+            } else if (overallScore >= 4.5) {
+                priority = 'Low - Very Satisfied';
+                priorityEmoji = '🟢';
+            }
+            
+            // Create detailed analysis for email
+            let analysisDetails = `
+DETAILED ANALYSIS:
+• Overall Score: ${overallScore}/5.0
+• Text Sentiment: ${textAnalysis.sentiment.charAt(0).toUpperCase() + textAnalysis.sentiment.slice(1)} (${textAnalysis.score}/5)
+• Priority Level: ${priority} ${priorityEmoji}`;
+
+            if (textAnalysis.issues.length > 0) {
+                analysisDetails += `\n• Issues Mentioned: ${textAnalysis.issues.join(', ')}`;
+            }
+            
+            if (textAnalysis.positives.length > 0) {
+                analysisDetails += `\n• Positive Aspects: ${textAnalysis.positives.join(', ')}`;
+            }
+            
+            if (textAnalysis.isDetailed) {
+                analysisDetails += `\n• Detailed Feedback: Yes (${textAnalysis.textLength} characters)`;
+            }
+            
+            if (textAnalysis.keywords.length > 0) {
+                analysisDetails += `\n• Keywords Found: ${textAnalysis.keywords.join(', ')}`;
+            }
+            
+            // Prepare email template parameters
             const templateParams = {
+                hospital_name: 'Magodo Specialist Hospital',
                 satisfaction_rating: `${satisfactionLabels[data.satisfaction]} (${data.satisfaction}/5)`,
                 recommendation_score: `${recommendLabels[data.recommendation]} (${data.recommendation}/5)`,
                 comments: data.comments || 'No additional comments provided',
                 timestamp: new Date(data.timestamp).toLocaleString(),
-                hospital_name: data.hospital
+                overall_score: `${overallScore}/5.0`,
+                priority_level: `${priority} ${priorityEmoji}`,
+                sentiment: textAnalysis.sentiment.charAt(0).toUpperCase() + textAnalysis.sentiment.slice(1),
+                text_score: `${textAnalysis.score}/5`,
+                analysis_details: analysisDetails,
+                issues_found: textAnalysis.issues.length > 0 ? textAnalysis.issues.join(', ') : 'None',
+                positives_found: textAnalysis.positives.length > 0 ? textAnalysis.positives.join(', ') : 'None'
             };
             
+            // Send email via EmailJS
             emailjs.send('service_vmknsar', 'template_2wpah22', templateParams)
                 .then(function(response) {
                     console.log('Email sent successfully!', response.status, response.text);
+                    console.log('Analysis Results:', textAnalysis);
+                    console.log('Overall Score:', overallScore);
                 }, function(error) {
                     console.log('Email failed to send:', error);
                 });
