@@ -684,30 +684,58 @@
             
             const lowerText = text.toLowerCase();
             
-            // Define keyword categories with weights
+            // Enhanced keyword categories with better weights
             const positiveWords = {
-                'excellent': 5, 'amazing': 5, 'outstanding': 5, 'exceptional': 5,
-                'great': 4, 'good': 4, 'wonderful': 4, 'fantastic': 4, 'lovely': 4,
-                'nice': 3, 'okay': 3, 'fine': 3, 'decent': 3,
-                'professional': 4, 'friendly': 4, 'helpful': 4, 'clean': 4,
-                'quick': 3, 'fast': 3, 'efficient': 4, 'caring': 4,
-                'recommend': 4, 'satisfied': 4, 'happy': 4, 'pleased': 4
+                'excellent': 5, 'amazing': 5, 'outstanding': 5, 'exceptional': 5, 'perfect': 5,
+                'great': 4, 'good': 4, 'wonderful': 4, 'fantastic': 4, 'lovely': 4, 'awesome': 4,
+                'nice': 3, 'okay': 3, 'fine': 3, 'decent': 3, 'satisfied': 4,
+                'professional': 4, 'friendly': 4, 'helpful': 4, 'clean': 4, 'caring': 4,
+                'quick': 3, 'fast': 3, 'efficient': 4, 'recommend': 4, 'happy': 4, 'pleased': 4,
+                'impressed': 4, 'comfortable': 3, 'smooth': 3, 'easy': 3, 'thorough': 4
             };
             
             const negativeWords = {
-                'terrible': 1, 'awful': 1, 'horrible': 1, 'worst': 1,
-                'bad': 2, 'poor': 2, 'disappointing': 2, 'unacceptable': 1,
-                'slow': 2, 'rude': 1, 'unprofessional': 1, 'dirty': 1,
-                'expensive': 2, 'overpriced': 2, 'long wait': 2, 'delayed': 2,
-                'problem': 2, 'issue': 2, 'complaint': 2, 'concern': 2,
-                'dissatisfied': 1, 'unhappy': 2, 'frustrated': 2
+                // Very negative (score 1)
+                'terrible': 1, 'awful': 1, 'horrible': 1, 'worst': 1, 'hate': 1, 'disgusting': 1,
+                'unacceptable': 1, 'outrageous': 1, 'appalling': 1, 'shocking': 1, 'ridiculous': 1,
+                'nightmare': 1, 'disaster': 1, 'useless': 1, 'pathetic': 1, 'incompetent': 1,
+                
+                // Moderately negative (score 2)
+                'bad': 2, 'poor': 2, 'disappointing': 2, 'frustrated': 2, 'annoyed': 2, 'upset': 2,
+                'dissatisfied': 2, 'unhappy': 2, 'concerned': 2, 'worried': 2, 'uncomfortable': 2,
+                'unprofessional': 1, 'rude': 1, 'disrespectful': 1, 'careless': 2, 'negligent': 1,
+                
+                // Service issues
+                'slow': 2, 'delayed': 2, 'late': 2, 'waiting': 2, 'wait': 2, 'long': 2,
+                'expensive': 2, 'overpriced': 2, 'costly': 2, 'dirty': 1, 'unclean': 1, 'messy': 2,
+                
+                // Staff issues
+                'untrained': 1, 'inexperienced': 2, 'unfriendly': 2, 'dismissive': 1, 'arrogant': 1,
+                'insensitive': 1, 'cold': 2, 'harsh': 2, 'impatient': 2
             };
             
+            // Enhanced negative phrases and patterns
+            const negativePatterns = [
+                { pattern: /without empathy|no empathy|lack.*empathy/i, weight: 1, issue: 'lack of empathy' },
+                { pattern: /never.*again|won't.*back|not.*returning/i, weight: 1, issue: 'will not return' },
+                { pattern: /moving mountains|extremely difficult/i, weight: 1, issue: 'very reluctant to return' },
+                { pattern: /counterproductive|makes no sense/i, weight: 2, issue: 'questions approach' },
+                { pattern: /don't you think|shouldn't.*be/i, weight: 2, issue: 'rhetorical criticism' },
+                { pattern: /how can.*\?/i, weight: 2, issue: 'questioning service' },
+                { pattern: /treated.*badly|treated.*poorly|mistreated/i, weight: 1, issue: 'poor treatment' },
+                { pattern: /staff.*problem|staff.*issue|staff.*rude/i, weight: 1, issue: 'staff problems' },
+                { pattern: /waste.*time|wasted.*time/i, weight: 2, issue: 'time wasted' },
+                { pattern: /no point|what's the point/i, weight: 1, issue: 'questioning value' }
+            ];
+            
             const issueKeywords = [
-                'wait', 'waiting', 'delay', 'late', 'slow', 'long time',
-                'rude', 'unfriendly', 'unprofessional', 'dirty', 'unclean',
-                'expensive', 'cost', 'price', 'billing', 'payment',
-                'appointment', 'schedule', 'booking', 'availability'
+                'wait', 'waiting', 'delay', 'delayed', 'late', 'slow', 'long time', 'hours',
+                'rude', 'unfriendly', 'unprofessional', 'dismissive', 'arrogant', 'cold',
+                'dirty', 'unclean', 'messy', 'crowded', 'noisy',
+                'expensive', 'cost', 'price', 'billing', 'payment', 'overpriced',
+                'appointment', 'schedule', 'booking', 'availability', 'cancelled',
+                'empathy', 'compassion', 'understanding', 'care', 'treatment',
+                'staff', 'nurse', 'doctor', 'reception', 'service'
             ];
             
             // Calculate sentiment score
@@ -716,6 +744,17 @@
             let foundKeywords = [];
             let issues = [];
             let positives = [];
+            let negativeModifier = 0;
+            
+            // Check for negative patterns first (these are strong indicators)
+            negativePatterns.forEach(pattern => {
+                if (pattern.pattern.test(text)) {
+                    totalScore += pattern.weight;
+                    wordCount++;
+                    issues.push(pattern.issue);
+                    negativeModifier += (3 - pattern.weight); // Additional penalty for patterns
+                }
+            });
             
             // Check positive words
             Object.keys(positiveWords).forEach(word => {
@@ -739,9 +778,23 @@
             // Identify specific issues
             issueKeywords.forEach(issue => {
                 if (lowerText.includes(issue)) {
-                    issues.push(issue);
+                    if (!issues.includes(issue)) {
+                        issues.push(issue);
+                    }
                 }
             });
+            
+            // Check for question marks (often indicate complaints)
+            const questionMarks = (text.match(/\?/g) || []).length;
+            if (questionMarks > 1) {
+                negativeModifier += 0.5; // Multiple questions often indicate frustration
+            }
+            
+            // Check for exclamation marks (can indicate strong emotion)
+            const exclamationMarks = (text.match(/!/g) || []).length;
+            if (exclamationMarks > 1) {
+                negativeModifier += 0.3;
+            }
             
             // Calculate final score (1-5 scale)
             let finalScore;
@@ -749,8 +802,20 @@
                 finalScore = 3; // Neutral if no sentiment words found
             } else {
                 const averageScore = totalScore / wordCount;
-                finalScore = Math.round(Math.max(1, Math.min(5, averageScore)));
+                finalScore = Math.max(1, Math.min(5, averageScore - negativeModifier));
             }
+            
+            // Apply additional logic for clearly negative feedback
+            if (issues.length > 2 && finalScore > 2.5) {
+                finalScore = Math.max(1.5, finalScore - 1); // Penalty for multiple issues
+            }
+            
+            // If negative patterns were found, cap the score
+            if (negativeModifier > 1 && finalScore > 2) {
+                finalScore = Math.min(2, finalScore);
+            }
+            
+            finalScore = Math.round(finalScore * 10) / 10; // Round to 1 decimal
             
             // Determine sentiment label
             let sentiment;
@@ -758,18 +823,17 @@
             else if (finalScore <= 2) sentiment = 'negative';
             else sentiment = 'neutral';
             
-            // Additional scoring based on text length and specificity
-            const lengthBonus = text.length > 50 ? 0.2 : 0; // Bonus for detailed feedback
-            const specificityBonus = issues.length > 0 || positives.length > 0 ? 0.1 : 0;
-            
             return {
-                score: Math.min(5, finalScore + lengthBonus + specificityBonus),
+                score: finalScore,
                 sentiment: sentiment,
                 keywords: foundKeywords,
                 issues: issues,
                 positives: positives,
                 textLength: text.length,
-                isDetailed: text.length > 50
+                isDetailed: text.length > 50,
+                questionMarks: questionMarks,
+                exclamationMarks: exclamationMarks,
+                negativeModifier: negativeModifier
             };
         }
         
