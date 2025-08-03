@@ -229,6 +229,30 @@
             font-size: 15px;
         }
         
+        .comment-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            margin-bottom: 16px;
+        }
+        
+        .comment-input:focus {
+            outline: none;
+            border-color: #4a90e2;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+        
+        .comment-input::placeholder {
+            color: #9ca3af;
+        }
+        
         .comment-textarea {
             width: 100%;
             padding: 16px;
@@ -430,6 +454,11 @@
                 padding: 12px;
             }
             
+            .comment-input {
+                padding: 12px;
+                margin-bottom: 12px;
+            }
+            
             .submit-btn {
                 padding: 14px 20px;
                 font-size: 15px;
@@ -552,6 +581,26 @@
             </div>
             
             <div class="comment-section">
+                <label for="patientName">Your Name (Optional)</label>
+                <input 
+                    type="text" 
+                    id="patientName" 
+                    class="comment-input"
+                    placeholder="Enter your name..."
+                />
+            </div>
+
+            <div class="comment-section">
+                <label for="patientContact">Email or Phone (Optional)</label>
+                <input 
+                    type="text" 
+                    id="patientContact" 
+                    class="comment-input"
+                    placeholder="your.email@example.com or +234 801 234 5678"
+                />
+            </div>
+            
+            <div class="comment-section">
                 <label for="comments">Share your experience with us</label>
                 <textarea 
                     id="comments" 
@@ -638,12 +687,16 @@
         
         // Handle form submission
         document.getElementById('submitBtn').addEventListener('click', function() {
+            const patientName = document.getElementById('patientName').value.trim();
+            const patientContact = document.getElementById('patientContact').value.trim();
             const comments = document.getElementById('comments').value;
             const timestamp = new Date().toISOString();
             
             const feedbackData = {
                 satisfaction: satisfactionRating,
                 recommendation: recommendRating,
+                patientName: patientName || 'Anonymous',
+                patientContact: patientContact || 'Not provided',
                 comments: comments,
                 timestamp: timestamp,
                 userAgent: navigator.userAgent,
@@ -888,6 +941,8 @@ DETAILED ANALYSIS:
             // Prepare email template parameters
             const templateParams = {
                 hospital_name: 'Magodo Specialist Hospital',
+                patient_name: data.patientName,
+                patient_contact: data.patientContact,
                 satisfaction_rating: `${satisfactionLabels[data.satisfaction]} (${data.satisfaction}/5)`,
                 recommendation_score: `${recommendLabels[data.recommendation]} (${data.recommendation}/5)`,
                 comments: data.comments || 'No additional comments provided',
