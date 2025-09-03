@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SN9W0VL22Y"></script>
     <script>
@@ -12,293 +11,681 @@
         gtag('js', new Date());
         gtag('config', 'G-SN9W0VL22Y');
     </script>
-    
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function(){
-            emailjs.init("Z0VMFmiXu1u4xRa9b"); // Replace with your EmailJS public key
+            emailjs.init("Z0VMFmiXu1u4xRa9b");
         })();
     </script>
-    
-    <title>Patient Feedback Survey - Magodo Specialist Hospital</title>
+    <title>Patient Services - Magodo Specialist Hospital</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #f5f8ff 0%, #e8f4f8 50%, #f0f8ff 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f6f5;
             min-height: 100vh;
-            padding: 16px;
+            padding: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
         }
-        
-        .survey-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 32px;
+
+        body::before {
+            content: '🏥 ❤️ 😊 💚 🌟 ✨ 💫 🎉';
+            position: fixed;
+            top: -50px;
+            left: -100%;
+            font-size: 24px;
+            animation: float 25s linear infinite;
+            opacity: 0.1;
+            z-index: 0;
+            white-space: nowrap;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(0) rotate(0deg); }
+            100% { transform: translateX(200vw) rotate(360deg); }
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            padding: 16px;
             max-width: 420px;
             width: 100%;
             box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.08),
-                0 4px 16px rgba(0, 0, 0, 0.04),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+                0 20px 60px rgba(255, 255, 255, 0.3),
+                0 10px 30px rgba(255, 255, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            animation: bounceIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            z-index: 1;
         }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: translateY(60px) scale(0.3) rotate(-10deg); }
+            50% { opacity: 0.8; transform: translateY(-20px) scale(1.05) rotate(2deg); }
+            70% { opacity: 0.9; transform: translateY(10px) scale(0.98) rotate(-1deg); }
+            100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
         }
-        
+
         .hospital-header {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 20px;
             position: relative;
         }
-        
+
         .hospital-icon {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, #4a90e2, #357abd);
-            border-radius: 20px;
-            margin: 0 auto 16px;
+            width: 70px;
+            height: 70px;
+            background: transparent url('MSH LOGO.png') no-repeat center center;
+            background-size: contain;
+            border-radius: 50%;
+            margin: 0 auto 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 24px rgba(74, 144, 226, 0.25);
+            box-shadow: 
+                0 8px 30px rgba(0, 0, 0, 0.1),
+                0 0 0 8px rgba(0, 0, 0, 0.05);
+            animation: pulse 2s infinite, wiggle 3s infinite;
+            position: relative;
         }
-        
-        .hospital-icon::before {
-            content: '🏥';
-            font-size: 28px;
-            filter: brightness(0) invert(1);
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-        
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
+        }
+
+        .hospital-icon::after {
+            content: '✨';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 16px;
+            animation: sparkle 1.5s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.5; transform: scale(1.2) rotate(180deg); }
+        }
+
         .hospital-header h1 {
-            color: #2c3e50;
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            color: #000080;
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 6px;
             letter-spacing: -0.5px;
         }
-        
+
         .hospital-header p {
-            color: #6b7280;
+            color: #636e72;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .tab-navigation {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            background: rgba(152, 251, 152, 0.1);
+            padding: 6px;
+            position: relative;
+            box-shadow: inset 0 2px 8px rgba(152, 251, 152, 0.15);
+        }
+
+        .tab-indicator {
+            position: absolute;
+            background: #27ae60;
+            border-radius: 16px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 4px 20px rgba(152, 251, 152, 0.4),
+                0 0 0 2px rgba(255, 255, 255, 0.5);
+            width: 50%;
+            height: 52px;
+            left: 6px;
+            top: 6px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 16px 20px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #636e72;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 16px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-btn.active {
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            transform: translateY(-1px);
+        }
+
+        .tab-btn:not(.active):hover {
+            color: #27ae60;
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .tab-icon {
+            font-size: 18px;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+        }
+
+        .tab-content {
+            display: none;
+            animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes slideInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+             }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+             }
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3436;
+            font-weight: 700;
+            font-size: 15px;
+            position: relative;
+        }
+
+        .required::after {
+            content: '*';
+            color: #e17055;
+            margin-left: 4px;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 18px;
+            border: 3px solid #e9ecef;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #27ae60;
+            background: white;;
+        }
+
+        .form-input:focus-visible {
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: #a0a0a0;
+            font-weight: 500;
+            font-size: 14px;
+            opacity: 1;
+        }
+
+        .form-input.error {
+            border-color: #e17055;
+            animation: shake 0.6s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px) rotate(-2deg); }
+            75% { transform: translateX(8px) rotate(2deg); }
+        }
+
+        .error-message {
+            color: #e17055;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 6px;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .form-input.error + .error-message {
+            display: block;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 16px 36px 16px 18px;
+            border: 3px solid #e9ecef;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.9) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%23636e72"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>') no-repeat right 12px center;
+            background-size: 20px;
+            color: #2d3436;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            appearance: none;
+        }
+
+        .form-select:focus, .form-select:hover {
+            outline: none;
+            border-color: #27ae60;
+            background: white;
+            background-size: 20px;
+        }
+
+        .form-select:focus-visible {
+            outline: none;
+        }
+
+        .form-select option {
+            background: white;
+            color: #2d3436;
+            padding: 12px;
+        }
+
+        .form-select option[value=""]:disabled {
+            color: #a0a0a0;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .comment-textarea::placeholder {
+            color: #a0a0a0;
+            font-weight: 500;
+            font-size: 14px;
+            opacity: 1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-group:hover {
+            background: rgba(152, 251, 152, 0.08);
+            border-color: rgba(152, 251, 152, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .custom-checkbox {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border: 3px solid #e9ecef;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            margin-top: 2px;
+        }
+
+        .custom-checkbox.checked {
+            background: #27ae60;
+            border-color: #27ae60;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .custom-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            animation: checkPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes checkPop {
+            0% { transform: scale(0) rotate(180deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .checkbox-label {
+            color: #636e72;
             font-size: 15px;
             font-weight: 500;
+            cursor: pointer;
+            line-height: 1.5;
+            flex: 1;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        
+
+        .payment-info {
+            background: rgba(152, 251, 152, 0.1);
+            border: 3px solid rgba(152, 251, 152, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 16px;
+            display: none;
+            animation: slideDown 0.5s ease-out;
+            position: relative;
+        }
+
+        .payment-info::before {
+            content: '💰';
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            font-size: 30px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .payment-info.show {
+            display: block;
+        }
+
+        .payment-info h4 {
+            color: #27ae60;
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .payment-info p {
+            color: #636e72;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.6;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .price-highlight {
+            color: #27ae60;
+            font-weight: 800;
+            background: rgba(152, 251, 152, 0.15);
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 16px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            display: inline-block;
+        }
+
         .question-section {
-            margin-bottom: 28px;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: rgba(152, 251, 152, 0.03);
+            border-radius: 20px;
+            border: 2px solid rgba(152, 251, 152, 0.1);
         }
-        
+
         .question-title {
-            color: #374151;
+            color: #2d3436;
             margin-bottom: 16px;
             font-size: 17px;
-            font-weight: 600;
+            font-weight: 800;
             text-align: center;
             position: relative;
-            padding-bottom: 8px;
+            padding-bottom: 12px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        
+
         .question-title::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, #4a90e2, #357abd);
-            border-radius: 1px;
+            width: 60px;
+            height: 4px;
+            background: #27ae60;
+            border-radius: 2px;
+            animation: glow 2s infinite;
         }
-        
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(152, 251, 152, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(152, 251, 152, 0.6); }
+        }
+
         .rating-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 6px;
+            margin: 0 -8px 12px -8px;
         }
-        
+
         .rating-option {
-            aspect-ratio: 1;
-            border: 2px solid #e5e7eb;
+            aspect-ratio: auto;
+            border: 3px solid #e9ecef;
             border-radius: 16px;
             background: white;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 8px 4px;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            min-height: 70px;
+            max-height: 70px;
         }
-        
-        .rating-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #4a90e2, #357abd);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
+
         .rating-option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border-color: #4a90e2;
+            transform: translateY(-3px) scale(1.03) rotate(1deg);
+            box-shadow: 0 8px 25px rgba(152, 251, 152, 0.25);
+            border-color: #27ae60;
         }
-        
+
         .rating-option.selected {
-            border-color: #4a90e2;
-            background: #f0f7ff;
+            border-color: #27ae60;
+            border-width: 4px;
             transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.25);
         }
-        
-        .rating-option.selected::before {
-            opacity: 0.1;
-        }
-        
+
         .rating-emoji {
-            font-size: 20px;
+            font-size: 22px;
             margin-bottom: 4px;
             position: relative;
             z-index: 1;
             transition: transform 0.3s ease;
         }
-        
+
         .rating-option.selected .rating-emoji {
             transform: scale(1.1);
+            animation: celebrate 0.6s ease-out;
         }
-        
+
+        @keyframes celebrate {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-5deg); }
+            50% { transform: scale(1.05) rotate(3deg); }
+            100% { transform: scale(1.1) rotate(0deg); }
+        }
+
         .rating-label {
-            font-size: 10px;
-            color: #6b7280;
-            font-weight: 600;
+            font-size: 11px;
+            color: #636e72;
+            font-weight: 700;
             text-align: center;
-            line-height: 1.2;
+            line-height: 1.1;
             position: relative;
             z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+            padding: 0 2px;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
-        
+
         .rating-option.selected .rating-label {
-            color: #4a90e2;
+            color: #27ae60;
+            font-weight: 800;
         }
-        
+
         .rating-scale {
             display: flex;
             justify-content: space-between;
-            margin-top: 8px;
-            font-size: 11px;
-            color: #9ca3af;
-            font-weight: 500;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #a0a0a0;
+            font-weight: 600;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        
+
         .comment-section {
-            margin-bottom: 28px;
+            margin-bottom: 20px;
         }
-        
+
         .comment-section label {
             display: block;
-            margin-bottom: 12px;
-            color: #374151;
-            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3436;
+            font-weight: 700;
             font-size: 15px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        
-        .comment-input {
+
+        .comment-input, .comment-textarea {
             width: 100%;
-            padding: 16px;
-            border: 2px solid #e5e7eb;
+            padding: 16px 18px;
+            border: 3px solid #e9ecef;
             border-radius: 16px;
             font-family: inherit;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: 500;
             transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
-            margin-bottom: 16px;
-        }
-        
-        .comment-input:focus {
-            outline: none;
-            border-color: #4a90e2;
             background: white;
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+            backdrop-filter: blur(10px);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        
-        .comment-input::placeholder {
-            color: #9ca3af;
-        }
-        
+
         .comment-textarea {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 16px;
-            font-family: inherit;
-            font-size: 14px;
             resize: vertical;
             min-height: 100px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
+            margin-bottom: 16px;
         }
-        
-        .comment-textarea:focus {
+
+        .comment-input:focus, .comment-textarea:focus {
             outline: none;
-            border-color: #4a90e2;
+            border-color: #27ae60;
             background: white;
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
         }
-        
-        .comment-textarea::placeholder {
-            color: #9ca3af;
+
+        .comment-input::placeholder, .comment-textarea::placeholder {
+            color: #a0a0a0;
+            font-weight: 500;
+            font-size: 14px;
+            opacity: 1;
         }
-        
+
         .submit-section {
             text-align: center;
+            margin-top: 24px;
         }
-        
+
         .submit-btn {
             width: 100%;
-            padding: 16px 24px;
-            background: linear-gradient(135deg, #4a90e2, #357abd);
+            padding: 18px 24px;
+            background: #27ae60;
             color: white;
             border: none;
-            border-radius: 16px;
+            border-radius: 20px;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             position: relative;
             overflow: hidden;
+            box-shadow: 
+                0 8px 30px rgba(152, 251, 152, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        
+
         .submit-btn::before {
             content: '';
             position: absolute;
@@ -306,666 +693,1255 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
         }
-        
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(74, 144, 226, 0.4);
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 
+                0 15px 40px rgba(152, 251, 152, 0.5),
+                0 0 0 4px rgba(152, 251, 152, 0.2);
+            animation: buttonPulse 0.6s ease-out;
         }
-        
-        .submit-btn:hover::before {
+
+        @keyframes buttonPulse {
+            0% { transform: translateY(-4px) scale(1.02); }
+            50% { transform: translateY(-6px) scale(1.05); }
+            100% { transform: translateY(-4px) scale(1.02); }
+        }
+
+        submit-btn:hover::before {
             left: 100%;
         }
-        
+
         .submit-btn:disabled {
-            background: linear-gradient(135deg, #d1d5db, #9ca3af);
+            background: #ddd;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+            animation: none;
         }
-        
+
         .submit-btn:disabled::before {
             display: none;
         }
-        
-        .thank-you {
+
+        .thank-you, .registration-success {
             display: none;
             text-align: center;
-            padding: 48px 24px;
-            animation: fadeIn 0.8s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
+            padding: 32px 16px;
+            animation: celebrationPop 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+
+        @keyframes celebrationPop {
+            0% { opacity: 0; transform: scale(0.3) rotate(-180deg); }
+            50% { opacity: 0.8; transform: scale(1.1) rotate(10deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
-        
-        .success-icon {
+
+        .success-icon, .success-animation {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #10b981, #059669);
-            margin: 0 auto 24px;
+            background: #27ae60;
+            margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: bounce 2s infinite;
+            animation: successBounce 2s infinite;
+            box-shadow: 
+                0 10px 40px rgba(152, 251, 152, 0.4),
+                0 0 0 8px rgba(152, 251, 152, 0.1);
         }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0) scale(1);
-            }
-            40% {
-                transform: translateY(-10px) scale(1.05);
-            }
-            60% {
-                transform: translateY(-5px) scale(1.02);
-            }
+
+        @keyframes successBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) scale(1); }
+            40% { transform: translateY(-15px) scale(1.1); }
+            60% { transform: translateY(-8px) scale(1.05); }
         }
-        
-        .success-icon::after {
-            content: '✓';
-            color: white;
-            font-size: 36px;
-            font-weight: bold;
+
+        .success-icon::after, .success-animation::after {
+            content: '🎉';
+            font-size: 32px;
+            animation: rotate 2s linear infinite;
         }
-        
-        .thank-you h2 {
-            color: #10b981;
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .thank-you h2, .registration-success h2 {
+            color: #27ae60;
             margin-bottom: 16px;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
+            animation: textPop 1s ease-out 0.5s both;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        
-        .thank-you p {
-            color: #6b7280;
-            font-size: 16px;
+
+        @keyframes textPop {
+            0% { opacity: 0; transform: translateY(20px) scale(0.8); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .thank-you p, .registration-success p {
+            color: #636e72;
+            font-size: 15px;
+            font-weight: 500;
             line-height: 1.6;
-            max-width: 300px;
+            max-width: 320px;
             margin: 0 auto;
+            animation: textPop 1s ease-out 0.7s both;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        
-        .progress-indicator {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 24px;
-            gap: 8px;
-        }
-        
-        .progress-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #e5e7eb;
-            transition: all 0.3s ease;
-        }
-        
-        .progress-dot.active {
-            background: #4a90e2;
-            transform: scale(1.2);
-        }
-        
-        /* Mobile Optimizations */
+
         @media (max-width: 480px) {
-            body {
-                padding: 12px;
+            body { 
+                padding: 2px;
             }
-            
-            .survey-container {
-                padding: 24px;
-                border-radius: 20px;
+
+            .main-container {
+                padding: 12px;
+                border-radius: 24px;
+                margin: 2px;
+                max-width: calc(100vw - 4px);
             }
             
             .hospital-header h1 {
-                font-size: 20px;
+                font-size: 18px;
+             }
+            
+            .hospital-icon {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 8px;
+                font-size: 24px;
             }
+            
+            .hospital-icon::before {
+                font-size: 24px;
+            }
+            
+            .tab-btn {
+                padding: 12px 6px;
+                font-size: 11px;
+                gap: 4px;
+            }
+            
+            .tab-indicator {
+                height: 44px;
+            }
+            
+            .tab-icon {
+                font-size: 16px;
+             }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+             }
             
             .question-title {
-                font-size: 16px;
-            }
+                font-size: 15px;
+             }
             
             .rating-grid {
-                gap: 6px;
+                gap: 4px;
+                margin: 0 -4px 10px -4px;
             }
             
             .rating-option {
-                padding: 6px 2px;
+                padding: 6px 4px;
+                border-radius: 14px;
+                min-height: 60px;  /* Increase from 50px */
+                max-height: 60px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center
             }
             
             .rating-emoji {
-                font-size: 18px;
+                font-size: 22px;
+                margin-bottom: 2px;
             }
             
             .rating-label {
-                font-size: 9px;
+                font-size: 8px;
+                line-height: 1.0;
+                padding: 0 2px;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                overflow: visible;
             }
             
             .comment-textarea {
                 min-height: 80px;
-                padding: 12px;
+                padding: 14px;
+                margin-bottom: 12px;
+                font-size: 16px;
             }
             
             .comment-input {
-                padding: 12px;
+                padding: 14px;
                 margin-bottom: 12px;
+                font-size: 16px;
             }
             
             .submit-btn {
-                padding: 14px 20px;
-                font-size: 15px;
+                padding: 16px 20px;
+                font-size: 14px;
+                border-radius: 18px;
+            }
+            
+            .payment-info {
+                padding: 14px;
+                border-radius: 16px;
+            }
+            
+            .question-section {
+                padding: 12px;
+                border-radius: 16px;
+                margin-bottom: 16px;
+            }
+            
+            .success-icon, .success-animation {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .success-icon::after, .success-animation::after {
+                font-size: 28px;
+            }
+            
+            .thank-you h2, .registration-success h2 {
+                font-size: 20px;
+            }
+            
+            .form-input, .form-select {
+                font-size: 16px;
+                padding: 14px 32px 14px 16px;
+            }
+            
+            .form-select {
+                background-position: right 10px center;
+                background-size: 18px;
+            }
+            
+            .form-input::placeholder, .comment-input::placeholder, .comment-textarea::placeholder {
+                color: #a0a0a0;
+                font-weight: 500;
+                font-size: 14px;
+                opacity: 1;
+            }
+
+            input[type="date"] {
+                padding: 14px 16px !important;
+                font-size: 16px !important;
+            
+            .rating-scale {
+                font-size: 10px;
+                margin-top: 8px;
+            }
+            
+            .form-group label {
+                font-size: 14px;
+            }
+            
+            .checkbox-label {
+                font-size: 14px;
+            }
+            
+            .payment-info p {
+                font-size: 14px;
             }
         }
-        
-        /* Tablet Optimizations */
-        @media (min-width: 481px) and (max-width: 768px) {
-            .survey-container {
-                max-width: 480px;
-                padding: 36px;
+
+        @media (max-width: 360px) {
+            .main-container {
+                padding: 10px;
+            }
+            
+            .hospital-header h1 {
+                font-size: 16px;
+            }
+            
+            .tab-btn {
+                padding: 10px 4px;
+                font-size: 10px;
+                gap: 2px;
+            }
+            
+            .tab-indicator {
+                height: 40px;
             }
             
             .rating-grid {
-                gap: 10px;
+                gap: 2px;
+                margin: 0 -2px 8px -2px;
             }
             
             .rating-option {
-                padding: 12px 6px;
+                padding: 4px;
+                border-radius: 12px;
+                min-height: 45px;
             }
             
             .rating-emoji {
-                font-size: 24px;
+                font-size: 20px;
+            }
+            
+            .rating-label {
+                font-size: 7px;
+                padding: 0 1px;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                overflow: visible;
+            }
+            
+            .rating-scale {
+                font-size: 9px;
+            }
+            
+            .form-input::placeholder, .comment-input::placeholder, .comment-textarea::placeholder {
+                color: #a0a0a0;
+                font-weight: 500;
+                font-size: 14px;
+                opacity: 1;
+            }
+            
+            .question-title {
+                font-size: 14px;
+            }
+            
+            .form-group label {
+                font-size: 13px;
+            }
+            
+            .form-select {
+                padding-right: 30px;
+                background-position: right 8px center;
+                background-size: 16px;
             }
         }
-        
-        /* Accessibility Improvements */
+
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            .hospital-icon, .success-animation, .submit-btn::before, 
+            .success-icon, body::before, .hospital-icon::after,
+            .tab-indicator, .custom-checkbox, .rating-option {
+                animation: none !important;
+            }
+            
+            * {
+                transition-duration: 0.1s !important;
             }
         }
-        
-        .rating-option:focus {
-            outline: 3px solid #4a90e2;
+
+        .tab-btn:focus-visible,
+        .rating-option:focus-visible,
+        .submit-btn:focus-visible,
+        .custom-checkbox:focus-visible {
+            outline: 3px solid #27ae60;
             outline-offset: 2px;
         }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
         
-        .submit-btn:focus {
-            outline: 3px solid #4a90e2;
-            outline-offset: 2px;
+        .hospital-header h1 {
+            color: #000080;
+        }
+        
+        .hospital-header p {
+            color: #57CAC3;
+        }
+        
+        .form-group label,
+        .question-title,
+        .comment-section label {
+            color: #2d3436;
+        }
+        
+        .checkbox-label {
+            color: #636e72;
+        }
+        
+        .form-input,
+        .form-select,
+        .comment-input,
+        .comment-textarea {
+            background: white;
+            color: #2d3436;
+            border-color: #e9ecef;
+        }
+        
+        .form-input::placeholder,
+        .form-select::placeholder,
+        .comment-input::placeholder,
+        .comment-textarea::placeholder {
+            color: #a0a0a0;
+            font-weight: 500;
+            font-size: 14px;
+            opacity: 1;
+        }
+        
+        .rating-option {
+            background: white;
+            border-color: #e9ecef;
+        }
+        
+        .question-section {
+            background: rgba(152, 251, 152, 0.03);
+            border-color: rgba(152, 251, 152, 0.1);
         }
     </style>
 </head>
 <body>
-    <div class="survey-container">
-        <div class="survey-form" id="surveyForm">
-            <div class="hospital-header">
-                <div class="hospital-icon"></div>
-                <h1>Magodo Specialist Hospital</h1>
-                <p>Your feedback helps us serve you better</p>
-            </div>
-            
-            <div class="progress-indicator">
-                <div class="progress-dot active"></div>
-                <div class="progress-dot"></div>
-                <div class="progress-dot"></div>
-            </div>
-            
-            <div class="question-section">
-                <h3 class="question-title">How satisfied are you with our care?</h3>
-                <div class="rating-grid" id="satisfactionRating">
-                    <button type="button" class="rating-option" data-value="1">
-                        <span class="rating-emoji">😞</span>
-                        <span class="rating-label">Very Poor</span>
-                    </button>
-                    <button type="button" class="rating-option" data-value="2">
-                        <span class="rating-emoji">😕</span>
-                        <span class="rating-label">Poor</span>
-                    </button>
-                    <button type="button" class="rating-option" data-value="3">
-                        <span class="rating-emoji">😐</span>
-                        <span class="rating-label">Fair</span>
-                    </button>
-                    <button type="button" class="rating-option" data-value="4">
-                        <span class="rating-emoji">😊</span>
-                        <span class="rating-label">Good</span>
-                    </button>
-                    <button type="button" class="rating-option" data-value="5">
-                        <span class="rating-emoji">🤩</span>
-                        <span class="rating-label">Excellent</span>
-                    </button>
+    <div class="main-container">
+        <div class="hospital-header">
+            <div class="hospital-icon"></div>
+            <h1>Magodo Specialist Hospital</h1>
+            <p>You are amazing!</p>
+        </div>
+
+        <div class="tab-navigation">
+            <div class="tab-indicator" id="tabIndicator"></div>
+            <button class="tab-btn active" data-tab="feedback">
+                <span class="tab-icon">💬</span>
+                Feedback
+            </button>
+            <button class="tab-btn" data-tab="registration">
+                <span class="tab-icon">👤</span>
+                Register
+            </button>
+        </div>
+
+        <div class="tab-content active" id="feedbackTab">
+            <div class="survey-form" id="surveyForm">
+                <div class="question-section">
+                    <h3 class="question-title">How satisfied are you with our care?</h3>
+                    <div class="rating-grid" id="satisfactionRating">
+                        <button type="button" class="rating-option" data-value="1">
+                            <span class="rating-emoji">😞</span>
+                            <span class="rating-label">Very Poor</span>
+                        </button>
+                        <button type="button" class="rating-option" data-value="2">
+                            <span class="rating-emoji">😕</span>
+                            <span class="rating-label">Poor</span>
+                        </button>
+                        <button type="button" class="rating-option" data-value="3">
+                            <span class="rating-emoji">😐</span>
+                            <span class="rating-label">Fair</span>
+                        </button>
+                        <button type="button" class="rating-option" data-value="4">
+                            <span class="rating-emoji">😊</span>
+                            <span class="rating-label">Good</span>
+                        </button>
+                        <button type="button" class="rating-option" data-value="5">
+                            <span class="rating-emoji">🤩</span>
+                            <span class="rating-label">Excellent</span>
+                        </button>
+                    </div>
+                    <div class="rating-scale">
+                        <span>Not satisfied</span>
+                        <span>Very satisfied</span>
+                    </div>
                 </div>
-                <div class="rating-scale">
-                    <span>Not satisfied</span>
-                    <span>Very satisfied</span>
+
+                <div class="question-section">
+                    <h3 class="question-title">Would you recommend us?</h3>
+                    <div class="rating-grid" id="recommendRating">
+                        <button type="button" class="rating-option" data-value="1">
+                            <span class="rating-emoji">👎</span>
+                            <span class="rating-label">Never</span>
+                        </button>
+                        <button type="button" class="rating-option" data-value="2">
+                            <span class="rating-emoji">🤷</span>
+                            <span class="rating-label">Unlikely</span>
+                        </button>
+                        <button type="button" class="rating-option" data-value="3">
+                            <span class="rating-emoji">🤔</span>
+                            <span class="rating-label">Maybe</span>
+                        </button>
+                        <button type="button" class="rating-option" data-value="4">
+                            <span class="rating-emoji">👍</span>
+                            <span class="rating-label">Likely</span>
+                        </button>
+                        <button type="button" class="rating-option" data-value="5">
+                            <span class="rating-emoji">💯</span>
+                            <span class="rating-label">Definitely</span>
+                        </button>
+                    </div>
+                    <div class="rating-scale">
+                        <span>Would not recommend</span>
+                        <span>Highly recommend</span>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="question-section">
-                <h3 class="question-title">Would you recommend us to others?</h3>
-                <div class="rating-grid" id="recommendRating">
-                    <button type="button" class="rating-option" data-value="1">
-                        <span class="rating-emoji">👎</span>
-                        <span class="rating-label">Never</span>
-                    </button>
-                    <button type="button" class="rating-option" data-value="2">
-                        <span class="rating-emoji">🤷</span>
-                        <span class="rating-label">Unlikely</span>
-                    </button>
-                    <button type="button" class="rating-option" data-value="3">
-                        <span class="rating-emoji">🤔</span>
-                        <span class="rating-label">Maybe</span>
-                    </button>
-                    <button type="button" class="rating-option" data-value="4">
-                        <span class="rating-emoji">👍</span>
-                        <span class="rating-label">Likely</span>
-                    </button>
-                    <button type="button" class="rating-option" data-value="5">
-                        <span class="rating-emoji">💯</span>
-                        <span class="rating-label">Definitely</span>
-                    </button>
+
+                <div class="comment-section">
+                    <label for="patientName">Your Name (Optional)</label>
+                    <input type="text" id="patientName" class="comment-input" placeholder="What should we call you?" />
                 </div>
-                <div class="rating-scale">
-                    <span>Would not recommend</span>
-                    <span>Highly recommend</span>
+
+                <div class="comment-section">
+                    <label for="patientContact">Email or Phone (Optional)</label>
+                    <input type="text" id="patientContact" class="comment-input" placeholder="email@example.com or +234 801 234 5678" />
                 </div>
-            </div>
-            
-            <div class="comment-section">
-                <label for="patientName">Your Name (Optional)</label>
-                <input 
-                    type="text" 
-                    id="patientName" 
-                    class="comment-input"
-                    placeholder="Enter your name..."
-                />
+
+                <div class="comment-section">
+                    <label for="comments">Share your experience!</label>
+                    <textarea id="comments" class="comment-textarea" placeholder="Tell us about your visit - we love hearing from you! Share what made you smile or how we can improve..." rows="4"></textarea>
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn" id="submitBtn" disabled>Send Feedback 🚀</button>
+                </div>
             </div>
 
-            <div class="comment-section">
-                <label for="patientContact">Email or Phone (Optional)</label>
-                <input 
-                    type="text" 
-                    id="patientContact" 
-                    class="comment-input"
-                    placeholder="your.email@example.com or +234 801 234 5678"
-                />
-            </div>
-            
-            <div class="comment-section">
-                <label for="comments">Share your experience with us</label>
-                <textarea 
-                    id="comments" 
-                    class="comment-textarea"
-                    placeholder="Tell us about your visit, our staff, facilities, or any suggestions for improvement..."
-                    rows="4"
-                ></textarea>
-            </div>
-            
-            <div class="submit-section">
-                <button type="submit" class="submit-btn" id="submitBtn" disabled>
-                    Submit Feedback
-                </button>
+            <div class="thank-you" id="thankYou">
+                <div class="success-icon"></div>
+                <h2>Amazing! Thank You! 🎉</h2>
+                <p>Your feedback means the world to us! We're constantly working to make your healthcare experience even better. You rock! 💪</p>
             </div>
         </div>
-        
-        <div class="thank-you" id="thankYou">
-            <div class="success-icon"></div>
-            <h2>Thank You!</h2>
-            <p>Your valuable feedback has been received. We truly appreciate you taking the time to help us improve our healthcare services.</p>
+
+        <div class="tab-content" id="registrationTab">
+            <form id="registrationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="lastName" class="required">Last Name</label>
+                        <input type="text" id="lastName" class="form-input" placeholder="Your family name" required>
+                        <div class="error-message">Please enter your last name</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName" class="required">First Name</label>
+                        <input type="text" id="firstName" class="form-input" placeholder="Your first name" required>
+                        <div class="error-message">Please enter your first name</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="middleName">Middle Name</label>
+                        <input type="text" id="middleName" class="form-input" placeholder="Your middle name (optional)">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="maritalStatus" class="required">Marital Status</label>
+                        <select id="maritalStatus" class="form-select" required>
+                            <option value="" disabled selected>Select marital status</option>
+                            <option value="single">Single</option>
+                            <option value="married">Married</option>
+                            <option value="divorced">Divorced</option>
+                            <option value="widowed">Widowed</option>
+                            <option value="separated">Separated</option>
+                        </select>
+                        <div class="error-message">Please select your marital status</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone" class="required">Phone Number</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="e.g. +234 801 234 5678" required>
+                        <div class="error-message">Please enter a valid phone number</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-input" placeholder="e.g. email@example.com">
+                        <div class="error-message">Please enter a valid email address</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dateOfBirth" class="required">Date of Birth</label>
+                        <input type="date" id="dateOfBirth" class="form-input" required>
+                        <div class="error-message">Please select your date of birth</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gender" class="required">Gender</label>
+                        <select id="gender" class="form-select" required>
+                            <option value="" disabled selected>Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="error-message">Please select your gender</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="payor" class="required">Payor Type</label>
+                        <select id="payor" class="form-select" required>
+                            <option value="" disabled selected>Select payor type</option>
+                            <option value="personal">Personal - ₦7,500</option>
+                            <option value="family">Family - ₦15,000</option>
+                            <option value="aiico">AIICO</option>
+                            <option value="anchor">Anchor</option>
+                            <option value="axamansard">Axamansard</option>
+                            <option value="bastion">Bastion</option>
+                            <option value="clearline">Clearline</option>
+                            <option value="hygeia">Hygeia</option>
+                            <option value="leadway">Leadway</option>
+                            <option value="nem">NEM</option>
+                            <option value="phillips">Phillips</option>
+                            <option value="reliance">Reliance</option>
+                            <option value="tht">THT</option>
+                        </select>
+                        <div class="error-message">Please select a payor type</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hmoId">HMO ID Number</label>
+                        <input type="text" id="hmoId" class="form-input" placeholder="Enter your HMO ID" disabled>
+                        <div class="error-message">Please enter your HMO ID</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address" class="required">Your Address</label>
+                    <textarea id="address" class="comment-textarea" placeholder="Enter your full address..." rows="2" required></textarea>
+                    <div class="error-message">Please enter your address</div>
+                </div>
+
+                <div class="payment-info" id="paymentInfo">
+                    <h4>💳 Payment Details</h4>
+                    <p id="paymentText">Please make payment of <span class="price-highlight">₦7,500</span> to complete your registration.</p>
+                </div>
+
+                <div class="checkbox-group" onclick="toggleConsent()">
+                    <div class="custom-checkbox" id="consentCheckbox"></div>
+                    <label class="checkbox-label">
+                        I consent to the processing of my personal information for medical purposes and agree to the hospital's privacy policy.
+                    </label>
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn" id="registerBtn" disabled>Complete Registration 🎯</button>
+                </div>
+            </form>
+
+            <div class="registration-success" id="registrationSuccess">
+                <div class="success-animation"></div>
+                <h2>Welcome to the Family! 🎉</h2>
+                <p id="successMessage">Your registration is complete! We're excited to be part of your health journey. We'll be in touch soon! 💚</p>
+            </div>
         </div>
     </div>
 
     <script>
-        let satisfactionRating = null;
-        let recommendRating = null;
-        
-        // Update progress indicator
-        function updateProgress() {
-            const dots = document.querySelectorAll('.progress-dot');
-            let activeCount = 1;
-            
-            if (satisfactionRating !== null) activeCount = 2;
-            if (recommendRating !== null) activeCount = 3;
-            
-            dots.forEach((dot, index) => {
-                if (index < activeCount) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-        
-        // Handle rating button clicks
-        document.querySelectorAll('.rating-option').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const container = this.parentElement;
-                const containerType = container.id;
-                
-                // Remove selected class from siblings
-                container.querySelectorAll('.rating-option').forEach(sibling => {
-                    sibling.classList.remove('selected');
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentTab = 'feedback';
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const tabIndicator = document.getElementById('tabIndicator');
+            const registrationForm = document.getElementById('registrationForm');
+            const consentCheckbox = document.getElementById('consentCheckbox');
+            const registerBtn = document.getElementById('registerBtn');
+            const payorSelect = document.getElementById('payor');
+            const hmoIdInput = document.getElementById('hmoId');
+            const paymentInfo = document.getElementById('paymentInfo');
+            const paymentText = document.getElementById('paymentText');
+            let consentGiven = false;
+
+            function switchTab(tabName) {
+                tabButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.tab === tabName);
                 });
+
+                tabContents.forEach(content => {
+                    content.classList.toggle('active', content.id === `${tabName}Tab`);
+                });
+
+                const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
+                const containerRect = activeBtn.parentElement.getBoundingClientRect();
+                const btnRect = activeBtn.getBoundingClientRect();
                 
-                // Add selected class to clicked button
-                this.classList.add('selected');
-                
-                // Store the rating value
-                const value = parseInt(this.dataset.value);
-                if (containerType === 'satisfactionRating') {
-                    satisfactionRating = value;
-                } else if (containerType === 'recommendRating') {
-                    recommendRating = value;
+                const leftOffset = btnRect.left - containerRect.left - 6;
+                tabIndicator.style.transform = `translateX(${leftOffset}px)`;
+
+                currentTab = tabName;
+
+                if (navigator.vibrate) {
+                    navigator.vibrate([50, 30, 100]);
                 }
+            }
+
+            setTimeout(() => {
+                switchTab('feedback');
+            }, 100);
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchTab(btn.dataset.tab);
+                });
+            });
+
+            if (payorSelect) {
+                payorSelect.addEventListener('change', function() {
+                    const selectedPayor = this.value;
+                    const hmoOptions = ['aiico', 'anchor', 'axamansard', 'bastion', 'clearline', 'hygeia', 'leadway', 'nem', 'phillips', 'reliance', 'tht'];
+
+                    if (hmoOptions.includes(selectedPayor)) {
+                        hmoIdInput.disabled = false;
+                        hmoIdInput.required = true;
+                        hmoIdInput.style.opacity = '1';
+                        paymentInfo.classList.remove('show');
+                    } else {
+                        hmoIdInput.disabled = true;
+                        hmoIdInput.required = false;
+                        hmoIdInput.value = '';
+                        hmoIdInput.style.opacity = '0.7';
+
+                        if (selectedPayor === 'personal') {
+                            paymentText.innerHTML = 'Please pay <span class="price-highlight">₦7,500</span> to <span class="price-highlight">5380820030</span> (Moniepoint) to activate your personal plan! 💚';
+                            paymentInfo.classList.add('show');
+                        } else if (selectedPayor === 'family') {
+                            paymentText.innerHTML = 'Please pay <span class="price-highlight">₦15,000</span> to <span class="price-highlight">5380820030</span> (Moniepoint) to activate your family plan! 👨‍👩‍👧‍👦';
+                            paymentInfo.classList.add('show');
+                        } else {
+                            paymentInfo.classList.remove('show');
+                        }
+                    }
+                    validateRegistrationForm();
+                });
+            } else {
+                console.error('Element with id "payor" not found');
+            }
+
+            window.toggleConsent = function() {
+                consentGiven = !consentGiven;
+                consentCheckbox.classList.toggle('checked', consentGiven);
                 
-                // Add haptic feedback for mobile
                 if (navigator.vibrate) {
                     navigator.vibrate(50);
                 }
                 
-                // Update progress and submit button
-                updateProgress();
-                updateSubmitButton();
-            });
-        });
-        
-        function updateSubmitButton() {
-            const submitBtn = document.getElementById('submitBtn');
-            if (satisfactionRating !== null && recommendRating !== null) {
-                submitBtn.disabled = false;
+                validateRegistrationForm();
             }
-        }
-        
-        // Handle form submission
-        document.getElementById('submitBtn').addEventListener('click', function() {
-            const patientName = document.getElementById('patientName').value.trim();
-            const patientContact = document.getElementById('patientContact').value.trim();
-            const comments = document.getElementById('comments').value;
-            const timestamp = new Date().toISOString();
-            
-            const feedbackData = {
-                satisfaction: satisfactionRating,
-                recommendation: recommendRating,
-                patientName: patientName || 'Anonymous',
-                patientContact: patientContact || 'Not provided',
-                comments: comments,
-                timestamp: timestamp,
-                userAgent: navigator.userAgent,
-                hospital: 'Magodo Specialist Hospital'
-            };
-            
-            // Submit feedback
-            submitFeedback(feedbackData);
-        });
-        
-        function submitFeedback(data) {
-            // Show loading state
-            const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.textContent;
-            submitBtn.innerHTML = '<span style="opacity: 0.7">Submitting...</span>';
-            submitBtn.disabled = true;
-            
-            // Send email with analysis
-            sendFeedbackEmail(data);
-            
-            // Show thank you message after a short delay
-            setTimeout(() => {
-                document.getElementById('surveyForm').style.display = 'none';
-                document.getElementById('thankYou').style.display = 'block';
-            }, 1500);
-        }
-        
-        function analyzeTextFeedback(text) {
-            if (!text || text.trim().length === 0) {
+
+            function validateRegistrationForm() {
+                const firstName = document.getElementById('firstName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                const maritalStatus = document.getElementById('maritalStatus').value;
+                const phone = document.getElementById('phone').value.trim();
+                const dateOfBirth = document.getElementById('dateOfBirth').value;
+                const gender = document.getElementById('gender').value;
+                const address = document.getElementById('address').value.trim();
+                const payor = payorSelect ? payorSelect.value : '';
+                const hmoId = document.getElementById('hmoId').value.trim();
+
+                const hmoOptions = ['aiico', 'anchor', 'axamansard', 'bastion', 'clearline', 'hygeia', 'leadway', 'nem', 'phillips', 'reliance', 'tht'];
+                const hmoIdValid = !hmoOptions.includes(payor) || (hmoOptions.includes(payor) && hmoId);
+
+                const isValid = firstName && lastName && maritalStatus && phone && dateOfBirth && gender && address && payor && consentGiven && hmoIdValid;
+
+                registerBtn.disabled = !isValid;
+            }
+
+            ['firstName', 'lastName', 'middleName', 'maritalStatus', 'phone', 'dateOfBirth', 'gender', 'address', 'hmoId'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', validateRegistrationForm);
+                    element.addEventListener('change', validateRegistrationForm);
+                }
+            });
+
+            if (payorSelect) {
+                payorSelect.addEventListener('change', validateRegistrationForm);
+            }
+
+            document.getElementById('phone').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.startsWith('234')) {
+                    value = '+' + value;
+                } else if (value.startsWith('0')) {
+                    value = '+234' + value.substring(1);
+                } else if (value && !value.startsWith('+')) {
+                    value = '+234' + value;
+                }
+                e.target.value = value;
+            });
+
+            document.getElementById('dateOfBirth').addEventListener('change', function(e) {
+                const dateInput = e.target;
+                if (dateInput.value) {
+                    const date = new Date(dateInput.value);
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const year = date.getFullYear();
+                    dateInput.dataset.formattedValue = `${day}/${month}/${year}`;
+                } else {
+                    dateInput.dataset.formattedValue = '';
+                }
+            });
+
+            registrationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (registerBtn.disabled) return;
+
+                const selectedPayor = payorSelect ? payorSelect.value : '';
+                const dateOfBirthInput = document.getElementById('dateOfBirth');
+
+                const registrationData = {
+                    lastName: document.getElementById('lastName').value.trim(),
+                    firstName: document.getElementById('firstName').value.trim(),
+                    middleName: document.getElementById('middleName').value.trim() || 'Not provided',
+                    maritalStatus: document.getElementById('maritalStatus').value,
+                    phone: document.getElementById('phone').value.trim(),
+                    email: document.getElementById('email').value.trim() || 'Not provided',
+                    dateOfBirth: dateOfBirthInput.dataset.formattedValue || dateOfBirthInput.value,
+                    gender: document.getElementById('gender').value,
+                    address: document.getElementById('address').value.trim(),
+                    payor: selectedPayor,
+                    hmoId: document.getElementById('hmoId').value.trim() || 'Not applicable',
+                    timestamp: new Date().toISOString(),
+                    registrationId: 'REG-' + Date.now()
+                };
+
+                registerBtn.innerHTML = '<span style="opacity: 0.7">✨ Processing Magic...</span>';
+                registerBtn.disabled = true;
+
+                sendRegistrationEmail(registrationData);
+                updateSuccessMessage(selectedPayor);
+
+                setTimeout(() => {
+                    document.getElementById('registrationForm').style.display = 'none';
+                    document.getElementById('registrationSuccess').style.display = 'block';
+                }, 1500);
+            });
+
+            function updateSuccessMessage(payorType) {
+                const successMessage = document.getElementById('successMessage');
+                let message = "Your registration is complete! We're excited to be part of your health journey. We'll be in touch soon! 💚";
+
+                if (payorType === 'personal') {
+                    message += " Remember to pay ₦7,500 to 5380820030 (Moniepoint) to activate your account! 🎯";
+                } else if (payorType === 'family') {
+                    message += " Remember to pay ₦15,000 to 5380820030 (Moniepoint) for your family plan! 👨‍👩‍👧‍👦";
+                }
+
+                successMessage.textContent = message;
+            }
+
+            function sendRegistrationEmail(data) {
+                const payorDisplay = {
+                    'personal': 'Personal (₦7,500)',
+                    'family': 'Family (₦15,000)',
+                    'aiico': 'AIICO',
+                    'anchor': 'Anchor',
+                    'axamansard': 'Axamansard',
+                    'bastion': 'Bastion',
+                    'clearline': 'Clearline',
+                    'hygeia': 'Hygeia',
+                    'leadway': 'Leadway',
+                    'nem': 'NEM',
+                    'phillips': 'Phillips',
+                    'reliance': 'Reliance',
+                    'tht': 'THT'
+                };
+
+                const templateParams = {
+                    hospital_name: 'Magodo Specialist Hospital',
+                    registration_id: data.registrationId,
+                    patient_name: `${data.lastName} ${data.firstName}${data.middleName !== 'Not provided' ? ' ' + data.middleName : ''}`,
+                    marital_status: data.maritalStatus,
+                    phone_number: data.phone,
+                    email_address: data.email,
+                    date_of_birth: data.dateOfBirth,
+                    gender: data.gender,
+                    address: data.address,
+                    hmo: payorDisplay[data.payor] || data.payor,
+                    hmo_id: data.hmoId,
+                    registration_timestamp: new Date(data.timestamp).toLocaleString(),
+                    priority_level: '🟡 Normal Priority'
+                };
+
+                emailjs.send('service_vmknsar', 'template_2f4o2a9', templateParams)
+                    .then(function(response) {
+                        console.log('Registration email sent successfully!', response.status, response.text);
+                    }, function(error) {
+                        console.log('Registration email failed to send:', error);
+                    });
+            }
+
+            let satisfactionRating = null;
+            let recommendRating = null;
+
+            function updateProgress() {
+                // Progress dots removed, function left empty
+            }
+
+            document.querySelectorAll('.rating-option').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const container = this.parentElement;
+                    const containerType = container.id;
+
+                    container.querySelectorAll('.rating-option').forEach(sibling => {
+                        sibling.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+
+                    const value = parseInt(this.dataset.value);
+
+                    if (containerType === 'satisfactionRating') {
+                        satisfactionRating = value;
+                    } else if (containerType === 'recommendRating') {
+                        recommendRating = value;
+                    }
+
+                    if (navigator.vibrate) {
+                        navigator.vibrate([50, 20, 80]);
+                    }
+
+                    updateProgress();
+                    updateSubmitButton();
+                });
+            });
+
+            function updateSubmitButton() {
+                const submitBtn = document.getElementById('submitBtn');
+                if (satisfactionRating !== null && recommendRating !== null) {
+                    submitBtn.disabled = false;
+                }
+            }
+
+            document.getElementById('submitBtn').addEventListener('click', function() {
+                const patientName = document.getElementById('patientName').value.trim();
+                const patientContact = document.getElementById('patientContact').value.trim();
+                const comments = document.getElementById('comments').value;
+                const timestamp = new Date().toISOString();
+
+                const feedbackData = {
+                    satisfaction: satisfactionRating,
+                    recommendation: recommendRating,
+                    patientName: patientName || 'Anonymous Hero',
+                    patientContact: patientContact || 'Not provided',
+                    comments: comments,
+                    timestamp: timestamp,
+                    userAgent: navigator.userAgent,
+                    hospital: 'Magodo Specialist Hospital'
+                };
+
+                submitFeedback(feedbackData);
+            });
+
+            function submitFeedback(data) {
+                const submitBtn = document.getElementById('submitBtn');
+                
+                submitBtn.innerHTML = '<span style="opacity: 0.7">🚀 Sending Feedback...</span>';
+                submitBtn.disabled = true;
+
+                sendFeedbackEmail(data);
+
+                setTimeout(() => {
+                    document.getElementById('surveyForm').style.display = 'none';
+                    document.getElementById('thankYou').style.display = 'block';
+                }, 1500);
+            }
+
+            function analyzeTextFeedback(text) {
+                if (!text || text.trim().length === 0) {
+                    return {
+                        score: 3,
+                        sentiment: 'neutral',
+                        keywords: [],
+                        issues: [],
+                        positives: []
+                    };
+                }
+
+                const lowerText = text.toLowerCase();
+
+                const positiveWords = {
+                    'excellent': 5, 'amazing': 5, 'outstanding': 5, 'exceptional': 5, 'perfect': 5,
+                    'great': 4, 'good': 4, 'wonderful': 4, 'fantastic': 4, 'lovely': 4, 'awesome': 4,
+                    'nice': 3, 'okay': 3, 'fine': 3, 'decent': 3, 'satisfied': 4,
+                    'professional': 4, 'friendly': 4, 'helpful': 4, 'clean': 4, 'caring': 4,
+                    'quick': 3, 'fast': 3, 'efficient': 4, 'recommend': 4, 'happy': 4, 'pleased': 4,
+                    'impressed': 4, 'comfortable': 3, 'smooth': 3, 'easy': 3, 'thorough': 4, 'empathetic': 4
+                };
+
+                const negativeWords = {
+                    'terrible': 1, 'awful': 1, 'horrible': 1, 'worst': 1, 'hate': 1, 'disgusting': 1,
+                    'unacceptable': 1, 'outrageous': 1, 'appalling': 1, 'shocking': 1, 'ridiculous': 1,
+                    'nightmare': 1, 'disaster': 1, 'useless': 1, 'pathetic': 1, 'incompetent': 1,
+                    'bad': 2, 'poor': 2, 'disappointing': 2, 'frustrated': 2, 'annoyed': 2, 'upset': 2,
+                    'dissatisfied': 2, 'unhappy': 2, 'concerned': 2, 'worried': 2, 'uncomfortable': 2,
+                    'unprofessional': 1, 'rude': 1, 'disrespectful': 1, 'careless': 2, 'negligent': 1,
+                    'slow': 2, 'delayed': 2, 'late': 2, 'waiting': 2, 'wait': 2, 'long': 2,
+                    'expensive': 2, 'overpriced': 2, 'costly': 2, 'dirty': 1, 'unclean': 1, 'messy': 2,
+                    'untrained': 1, 'inexperienced': 2, 'unfriendly': 2, 'dismissive': 1, 'arrogant': 1,
+                    'insensitive': 1, 'cold': 2, 'harsh': 2, 'impatient': 2, 'rude': 2
+                };
+
+                const negativePatterns = [
+                    { pattern: /without empathy|no empathy|lack.*empathy/i, weight: 1, issue: 'lack of empathy' },
+                    { pattern: /never.*again|won't.*back|not.*returning/i, weight: 1, issue: 'will not return' },
+                    { pattern: /moving mountains|extremely difficult/i, weight: 1, issue: 'very reluctant to return' },
+                    { pattern: /counterproductive|makes no sense/i, weight: 2, issue: 'questions approach' },
+                    { pattern: /don't you think|shouldn't.*be/i, weight: 2, issue: 'rhetorical criticism' },
+                    { pattern: /how can.*\?/i, weight: 2, issue: 'questioning service' },
+                    { pattern: /treated.*badly|treated.*poorly|mistreated/i, weight: 1, issue: 'poor treatment' },
+                    { pattern: /staff.*problem|staff.*issue|staff.*rude/i, weight: 1, issue: 'staff problems' },
+                    { pattern: /waste.*time|wasted.*time/i, weight: 2, issue: 'time wasted' },
+                    { pattern: /no point|what's the point/i, weight: 1, issue: 'questioning value' }
+                ];
+
+                const issueKeywords = [
+                    'wait', 'waiting', 'delay', 'delayed', 'late', 'slow', 'long time', 'hours',
+                    'rude', 'unfriendly', 'unprofessional', 'dismissive', 'arrogant', 'cold',
+                    'dirty', 'unclean', 'messy', 'crowded', 'noisy',
+                    'expensive', 'cost', 'price', 'billing', 'payment', 'overpriced',
+                    'appointment', 'schedule', 'booking', 'availability', 'cancelled',
+                    'empathy', 'compassion', 'understanding', 'care', 'treatment',
+                    'staff', 'nurse', 'doctor', 'reception', 'service'
+                ];
+
+                let totalScore = 0;
+                let wordCount = 0;
+                let foundKeywords = [];
+                let issues = [];
+                let positives = [];
+                let negativeModifier = 0;
+
+                negativePatterns.forEach(pattern => {
+                    if (pattern.pattern.test(text)) {
+                        totalScore += pattern.weight;
+                        wordCount++;
+                        issues.push(pattern.issue);
+                        negativeModifier += (3 - pattern.weight);
+                    }
+                });
+
+                Object.keys(positiveWords).forEach(word => {
+                    if (lowerText.includes(word)) {
+                        totalScore += positiveWords[word];
+                        wordCount++;
+                        foundKeywords.push(word);
+                        positives.push(word);
+                    }
+                });
+
+                Object.keys(negativeWords).forEach(word => {
+                    if (lowerText.includes(word)) {
+                        totalScore += negativeWords[word];
+                        wordCount++;
+                        foundKeywords.push(word);
+                    }
+                });
+
+                issueKeywords.forEach(issue => {
+                    if (lowerText.includes(issue)) {
+                        if (!issues.includes(issue)) {
+                            issues.push(issue);
+                        }
+                    }
+                });
+
+                const questionMarks = (text.match(/\?/g) || []).length;
+                if (questionMarks > 1) {
+                    negativeModifier += 0.5;
+                }
+
+                const exclamationMarks = (text.match(/!/g) || []).length;
+                if (exclamationMarks > 1) {
+                    negativeModifier += 0.3;
+                }
+
+                let finalScore;
+                if (wordCount === 0) {
+                    finalScore = 3;
+                } else {
+                    const averageScore = totalScore / wordCount;
+                    finalScore = Math.max(1, Math.min(5, averageScore - negativeModifier));
+                }
+
+                if (issues.length > 2 && finalScore > 2.5) {
+                    finalScore = Math.max(1.5, finalScore - 1);
+                }
+
+                if (negativeModifier > 1 && finalScore > 2) {
+                    finalScore = Math.min(2, finalScore);
+                }
+
+                finalScore = Math.round(finalScore * 10) / 10;
+
+                let sentiment;
+                if (finalScore >= 4) sentiment = 'positive';
+                else if (finalScore <= 2) sentiment = 'negative';
+                else sentiment = 'neutral';
+
                 return {
-                    score: 3, // Neutral for no comment
-                    sentiment: 'neutral',
-                    keywords: [],
-                    issues: [],
-                    positives: []
+                    score: finalScore,
+                    sentiment: sentiment,
+                    keywords: foundKeywords,
+                    issues: issues,
+                    positives: positives,
+                    textLength: text.length,
+                    isDetailed: text.length > 50,
+                    questionMarks: questionMarks,
+                    exclamationMarks: exclamationMarks,
+                    negativeModifier: negativeModifier
                 };
             }
-            
-            const lowerText = text.toLowerCase();
-            
-            // Enhanced keyword categories with better weights
-            const positiveWords = {
-                'excellent': 5, 'amazing': 5, 'outstanding': 5, 'exceptional': 5, 'perfect': 5,
-                'great': 4, 'good': 4, 'wonderful': 4, 'fantastic': 4, 'lovely': 4, 'awesome': 4,
-                'nice': 3, 'okay': 3, 'fine': 3, 'decent': 3, 'satisfied': 4,
-                'professional': 4, 'friendly': 4, 'helpful': 4, 'clean': 4, 'caring': 4,
-                'quick': 3, 'fast': 3, 'efficient': 4, 'recommend': 4, 'happy': 4, 'pleased': 4,
-                'impressed': 4, 'comfortable': 3, 'smooth': 3, 'easy': 3, 'thorough': 4
-            };
-            
-            const negativeWords = {
-                // Very negative (score 1)
-                'terrible': 1, 'awful': 1, 'horrible': 1, 'worst': 1, 'hate': 1, 'disgusting': 1,
-                'unacceptable': 1, 'outrageous': 1, 'appalling': 1, 'shocking': 1, 'ridiculous': 1,
-                'nightmare': 1, 'disaster': 1, 'useless': 1, 'pathetic': 1, 'incompetent': 1,
-                
-                // Moderately negative (score 2)
-                'bad': 2, 'poor': 2, 'disappointing': 2, 'frustrated': 2, 'annoyed': 2, 'upset': 2,
-                'dissatisfied': 2, 'unhappy': 2, 'concerned': 2, 'worried': 2, 'uncomfortable': 2,
-                'unprofessional': 1, 'rude': 1, 'disrespectful': 1, 'careless': 2, 'negligent': 1,
-                
-                // Service issues
-                'slow': 2, 'delayed': 2, 'late': 2, 'waiting': 2, 'wait': 2, 'long': 2,
-                'expensive': 2, 'overpriced': 2, 'costly': 2, 'dirty': 1, 'unclean': 1, 'messy': 2,
-                
-                // Staff issues
-                'untrained': 1, 'inexperienced': 2, 'unfriendly': 2, 'dismissive': 1, 'arrogant': 1,
-                'insensitive': 1, 'cold': 2, 'harsh': 2, 'impatient': 2
-            };
-            
-            // Enhanced negative phrases and patterns
-            const negativePatterns = [
-                { pattern: /without empathy|no empathy|lack.*empathy/i, weight: 1, issue: 'lack of empathy' },
-                { pattern: /never.*again|won't.*back|not.*returning/i, weight: 1, issue: 'will not return' },
-                { pattern: /moving mountains|extremely difficult/i, weight: 1, issue: 'very reluctant to return' },
-                { pattern: /counterproductive|makes no sense/i, weight: 2, issue: 'questions approach' },
-                { pattern: /don't you think|shouldn't.*be/i, weight: 2, issue: 'rhetorical criticism' },
-                { pattern: /how can.*\?/i, weight: 2, issue: 'questioning service' },
-                { pattern: /treated.*badly|treated.*poorly|mistreated/i, weight: 1, issue: 'poor treatment' },
-                { pattern: /staff.*problem|staff.*issue|staff.*rude/i, weight: 1, issue: 'staff problems' },
-                { pattern: /waste.*time|wasted.*time/i, weight: 2, issue: 'time wasted' },
-                { pattern: /no point|what's the point/i, weight: 1, issue: 'questioning value' }
-            ];
-            
-            const issueKeywords = [
-                'wait', 'waiting', 'delay', 'delayed', 'late', 'slow', 'long time', 'hours',
-                'rude', 'unfriendly', 'unprofessional', 'dismissive', 'arrogant', 'cold',
-                'dirty', 'unclean', 'messy', 'crowded', 'noisy',
-                'expensive', 'cost', 'price', 'billing', 'payment', 'overpriced',
-                'appointment', 'schedule', 'booking', 'availability', 'cancelled',
-                'empathy', 'compassion', 'understanding', 'care', 'treatment',
-                'staff', 'nurse', 'doctor', 'reception', 'service'
-            ];
-            
-            // Calculate sentiment score
-            let totalScore = 0;
-            let wordCount = 0;
-            let foundKeywords = [];
-            let issues = [];
-            let positives = [];
-            let negativeModifier = 0;
-            
-            // Check for negative patterns first (these are strong indicators)
-            negativePatterns.forEach(pattern => {
-                if (pattern.pattern.test(text)) {
-                    totalScore += pattern.weight;
-                    wordCount++;
-                    issues.push(pattern.issue);
-                    negativeModifier += (3 - pattern.weight); // Additional penalty for patterns
+
+            function sendFeedbackEmail(data) {
+                const satisfactionLabels = ['', 'Very Poor', 'Poor', 'Fair', 'Good', 'Excellent'];
+                const recommendLabels = ['', 'Never', 'Unlikely', 'Maybe', 'Likely', 'Definitely'];
+
+                const textAnalysis = analyzeTextFeedback(data.comments);
+
+                const overallScore = (
+                    (data.satisfaction * 0.4) +
+                    (data.recommendation * 0.4) +
+                    (textAnalysis.score * 0.2)
+                ).toFixed(1);
+
+                let priority = 'Normal';
+                let priorityEmoji = '🟡';
+
+                if (overallScore <= 2.5) {
+                    priority = 'High - Needs Attention';
+                    priorityEmoji = '🔴';
+                } else if (overallScore >= 4.5) {
+                    priority = 'Low - Very Satisfied';
+                    priorityEmoji = '🟢';
                 }
-            });
-            
-            // Check positive words
-            Object.keys(positiveWords).forEach(word => {
-                if (lowerText.includes(word)) {
-                    totalScore += positiveWords[word];
-                    wordCount++;
-                    foundKeywords.push(word);
-                    positives.push(word);
-                }
-            });
-            
-            // Check negative words
-            Object.keys(negativeWords).forEach(word => {
-                if (lowerText.includes(word)) {
-                    totalScore += negativeWords[word];
-                    wordCount++;
-                    foundKeywords.push(word);
-                }
-            });
-            
-            // Identify specific issues
-            issueKeywords.forEach(issue => {
-                if (lowerText.includes(issue)) {
-                    if (!issues.includes(issue)) {
-                        issues.push(issue);
-                    }
-                }
-            });
-            
-            // Check for question marks (often indicate complaints)
-            const questionMarks = (text.match(/\?/g) || []).length;
-            if (questionMarks > 1) {
-                negativeModifier += 0.5; // Multiple questions often indicate frustration
-            }
-            
-            // Check for exclamation marks (can indicate strong emotion)
-            const exclamationMarks = (text.match(/!/g) || []).length;
-            if (exclamationMarks > 1) {
-                negativeModifier += 0.3;
-            }
-            
-            // Calculate final score (1-5 scale)
-            let finalScore;
-            if (wordCount === 0) {
-                finalScore = 3; // Neutral if no sentiment words found
-            } else {
-                const averageScore = totalScore / wordCount;
-                finalScore = Math.max(1, Math.min(5, averageScore - negativeModifier));
-            }
-            
-            // Apply additional logic for clearly negative feedback
-            if (issues.length > 2 && finalScore > 2.5) {
-                finalScore = Math.max(1.5, finalScore - 1); // Penalty for multiple issues
-            }
-            
-            // If negative patterns were found, cap the score
-            if (negativeModifier > 1 && finalScore > 2) {
-                finalScore = Math.min(2, finalScore);
-            }
-            
-            finalScore = Math.round(finalScore * 10) / 10; // Round to 1 decimal
-            
-            // Determine sentiment label
-            let sentiment;
-            if (finalScore >= 4) sentiment = 'positive';
-            else if (finalScore <= 2) sentiment = 'negative';
-            else sentiment = 'neutral';
-            
-            return {
-                score: finalScore,
-                sentiment: sentiment,
-                keywords: foundKeywords,
-                issues: issues,
-                positives: positives,
-                textLength: text.length,
-                isDetailed: text.length > 50,
-                questionMarks: questionMarks,
-                exclamationMarks: exclamationMarks,
-                negativeModifier: negativeModifier
-            };
-        }
-        
-        function sendFeedbackEmail(data) {
-            const satisfactionLabels = ['', 'Very Poor', 'Poor', 'Fair', 'Good', 'Excellent'];
-            const recommendLabels = ['', 'Never', 'Unlikely', 'Maybe', 'Likely', 'Definitely'];
-            
-            // Analyze text feedback
-            const textAnalysis = analyzeTextFeedback(data.comments);
-            
-            // Calculate overall score (weighted average)
-            const overallScore = (
-                (data.satisfaction * 0.4) + 
-                (data.recommendation * 0.4) + 
-                (textAnalysis.score * 0.2)
-            ).toFixed(1);
-            
-            // Determine priority level
-            let priority = 'Normal';
-            let priorityEmoji = '🟡';
-            if (overallScore <= 2.5) {
-                priority = 'High - Needs Attention';
-                priorityEmoji = '🔴';
-            } else if (overallScore >= 4.5) {
-                priority = 'Low - Very Satisfied';
-                priorityEmoji = '🟢';
-            }
-            
-            // Create detailed analysis for email
-            let analysisDetails = `
-DETAILED ANALYSIS:
+
+                let analysisDetails = ` DETAILED ANALYSIS:
 • Overall Score: ${overallScore}/5.0
 • Text Sentiment: ${textAnalysis.sentiment.charAt(0).toUpperCase() + textAnalysis.sentiment.slice(1)} (${textAnalysis.score}/5)
 • Priority Level: ${priority} ${priorityEmoji}`;
 
-            if (textAnalysis.issues.length > 0) {
-                analysisDetails += `\n• Issues Mentioned: ${textAnalysis.issues.join(', ')}`;
+                if (textAnalysis.issues.length > 0) {
+                    analysisDetails += `\n• Issues Mentioned: ${textAnalysis.issues.join(', ')}`;
+                }
+
+                if (textAnalysis.positives.length > 0) {
+                    analysisDetails += `\n• Positive Aspects: ${textAnalysis.positives.join(', ')}`;
+                }
+
+                if (textAnalysis.isDetailed) {
+                    analysisDetails += `\n• Detailed Feedback: Yes (${textAnalysis.textLength} characters)`;
+                }
+
+                if (textAnalysis.keywords.length > 0) {
+                    analysisDetails += `\n• Keywords Found: ${textAnalysis.keywords.join(', ')}`;
+                }
+
+                const templateParams = {
+                    hospital_name: 'Magodo Specialist Hospital',
+                    patient_name: data.patientName,
+                    patient_contact: data.patientContact,
+                    satisfaction_rating: `${satisfactionLabels[data.satisfaction]} (${data.satisfaction}/5)`,
+                    recommendation_score: `${recommendLabels[data.recommendation]} (${data.recommendation}/5)`,
+                    comments: data.comments || 'No additional comments provided',
+                    timestamp: new Date(data.timestamp).toLocaleString(),
+                    overall_score: `${overallScore}/5.0`,
+                    priority_level: `${priority} ${priorityEmoji}`,
+                    sentiment: textAnalysis.sentiment.charAt(0).toUpperCase() + textAnalysis.sentiment.slice(1),
+                    text_score: `${textAnalysis.score}/5`,
+                    analysis_details: analysisDetails,
+                    issues_found: textAnalysis.issues.length > 0 ? textAnalysis.issues.join(', ') : 'None',
+                    positives_found: textAnalysis.positives.length > 0 ? textAnalysis.positives.join(', ') : 'None'
+                };
+
+                emailjs.send('service_vmknsar', 'template_2wpah22', templateParams)
+                    .then(function(response) {
+                        console.log('Feedback email sent successfully!', response.status, response.text);
+                        console.log('Analysis Results:', textAnalysis);
+                        console.log('Overall Score:', overallScore);
+                    }, function(error) {
+                        console.log('Feedback email failed to send:', error);
+                    });
             }
-            
-            if (textAnalysis.positives.length > 0) {
-                analysisDetails += `\n• Positive Aspects: ${textAnalysis.positives.join(', ')}`;
-            }
-            
-            if (textAnalysis.isDetailed) {
-                analysisDetails += `\n• Detailed Feedback: Yes (${textAnalysis.textLength} characters)`;
-            }
-            
-            if (textAnalysis.keywords.length > 0) {
-                analysisDetails += `\n• Keywords Found: ${textAnalysis.keywords.join(', ')}`;
-            }
-            
-            // Prepare email template parameters
-            const templateParams = {
-                hospital_name: 'Magodo Specialist Hospital',
-                patient_name: data.patientName,
-                patient_contact: data.patientContact,
-                satisfaction_rating: `${satisfactionLabels[data.satisfaction]} (${data.satisfaction}/5)`,
-                recommendation_score: `${recommendLabels[data.recommendation]} (${data.recommendation}/5)`,
-                comments: data.comments || 'No additional comments provided',
-                timestamp: new Date(data.timestamp).toLocaleString(),
-                overall_score: `${overallScore}/5.0`,
-                priority_level: `${priority} ${priorityEmoji}`,
-                sentiment: textAnalysis.sentiment.charAt(0).toUpperCase() + textAnalysis.sentiment.slice(1),
-                text_score: `${textAnalysis.score}/5`,
-                analysis_details: analysisDetails,
-                issues_found: textAnalysis.issues.length > 0 ? textAnalysis.issues.join(', ') : 'None',
-                positives_found: textAnalysis.positives.length > 0 ? textAnalysis.positives.join(', ') : 'None'
-            };
-            
-            // Send email via EmailJS
-            emailjs.send('service_vmknsar', 'template_2wpah22', templateParams)
-                .then(function(response) {
-                    console.log('Email sent successfully!', response.status, response.text);
-                    console.log('Analysis Results:', textAnalysis);
-                    console.log('Overall Score:', overallScore);
-                }, function(error) {
-                    console.log('Email failed to send:', error);
-                });
-        }
+
+            let konamiCode = [];
+            const konamiSequence = [
+                'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+                'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+                'KeyB', 'KeyA'
+            ];
+
+            document.addEventListener('keydown', function(e) {
+                konamiCode.push(e.code);
+                konamiCode = konamiCode.slice(-10);
+
+                if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+                    document.body.style.animation = 'rainbow 2s infinite';
+                    document.body.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffd93d, #6c5ce7)';
+                    document.body.style.backgroundSize = '400% 400%';
+                    
+                    setTimeout(() => {
+                        document.body.style.animation = '';
+                        document.body.style.background = '#f5f6f5';
+                    }, 3000);
+
+                    if (navigator.vibrate) {
+                        navigator.vibrate([100, 50, 100, 50, 200]);
+                    }
+                }
+            });
+
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes rainbow {
+                    0% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                    100% { background-position: 0% 50%; }
+                }
+            `;
+            document.head.appendChild(style);
+
+            document.addEventListener('click', function(e) {
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = '✨';
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = e.clientX + 'px';
+                sparkle.style.top = e.clientY + 'px';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.fontSize = '20px';
+                sparkle.style.zIndex = '9999';
+                sparkle.style.animation = 'sparkleFloat 1s ease-out';
+                document.body.appendChild(sparkle);
+
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1000);
+            });
+
+            const sparkleStyle = document.createElement('style');
+            sparkleStyle.textContent = `
+                @keyframes sparkleFloat {
+                    0% { opacity: 1; transform: translateY(0) scale(1); }
+                    100% { opacity: 0; transform: translateY(-50px) scale(0.5); }
+                }
+            `;
+            document.head.appendChild(sparkleStyle);
+        });
     </script>
 </body>
-</html>
+    </html>
