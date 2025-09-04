@@ -1676,48 +1676,151 @@
                 const lowerText = text.toLowerCase();
 
                 const positiveWords = {
-                    'excellent': 5, 'amazing': 5, 'outstanding': 5, 'exceptional': 5, 'perfect': 5,
-                    'great': 4, 'good': 4, 'wonderful': 4, 'fantastic': 4, 'lovely': 4, 'awesome': 4,
-                    'nice': 3, 'okay': 3, 'fine': 3, 'decent': 3, 'satisfied': 4,
-                    'professional': 4, 'friendly': 4, 'helpful': 4, 'clean': 4, 'caring': 4,
-                    'quick': 3, 'fast': 3, 'efficient': 4, 'recommend': 4, 'happy': 4, 'pleased': 4,
-                    'impressed': 4, 'comfortable': 3, 'smooth': 3, 'easy': 3, 'thorough': 4, 'empathetic': 4
+                    // Weight 5 - Exceptional experiences
+                    'excellent': 5, 'outstanding': 5, 'exceptional': 5, 'amazing': 5, 'perfect': 5,
+                    'superb': 5, 'flawless': 5, 'incredible': 5, 'phenomenal': 5, 'exemplary': 5,
+                    'remarkable': 5, 'extraordinary': 5, 'magnificent': 5, 'brilliant': 5, 'stellar': 5,
+
+                    // Weight 4 - Very positive experiences
+                    'wonderful': 4, 'fantastic': 4, 'great': 4, 'awesome': 4, 'marvelous': 4,
+                    'professional': 4, 'compassionate': 4, 'caring': 4, 'empathetic': 4, 'thorough': 4,
+                    'knowledgeable': 4, 'skilled': 4, 'competent': 4, 'efficient': 4, 'helpful': 4,
+                    'friendly': 4, 'courteous': 4, 'respectful': 4, 'understanding': 4, 'attentive': 4,
+                    'responsive': 4, 'prompt': 4, 'timely': 4, 'organized': 4, 'clean': 4,
+                    'comfortable': 4, 'reassuring': 4, 'calming': 4, 'healing': 4, 'therapeutic': 4,
+                    'satisfied': 4, 'pleased': 4, 'impressed': 4, 'grateful': 4, 'recommend': 4,
+                    'trust': 4, 'confident': 4, 'relieved': 4, 'blessed': 4, 'thankful': 4,
+
+                    // Weight 3 - Positive experiences
+                    'good': 3, 'nice': 3, 'pleasant': 3, 'adequate': 3, 'acceptable': 3,
+                    'reasonable': 3, 'appropriate': 3, 'decent': 3, 'fine': 3, 'suitable': 3,
+                    'convenient': 3, 'accessible': 3, 'available': 3, 'accommodating': 3, 'flexible': 3,
+                    'tolerant': 3, 'gentle': 3, 'kind': 3, 'polite': 3, 'informative': 3,
+                    'clear': 3, 'comfortable': 3, 'calm': 3, 'peaceful': 3, 'welcoming': 3,
+    
+                    // Weight 2 - Mild positive
+                    'okay': 2, 'fair': 2, 'manageable': 2, 'tolerable': 2, 'bearable': 2,
+                    'passable': 2, 'satisfactory': 2, 'workable': 2, 'functional': 2, 'usable': 2,
+                    
+                    // Weight 1 - Barely positive
+                    'minimal': 1, 'basic': 1, 'standard': 1, 'ordinary': 1, 'typical': 1
                 };
 
                 const negativeWords = {
-                    'terrible': 1, 'awful': 1, 'horrible': 1, 'worst': 1, 'hate': 1, 'disgusting': 1,
-                    'unacceptable': 1, 'outrageous': 1, 'appalling': 1, 'shocking': 1, 'ridiculous': 1,
-                    'nightmare': 1, 'disaster': 1, 'useless': 1, 'pathetic': 1, 'incompetent': 1,
-                    'bad': 2, 'poor': 2, 'disappointing': 2, 'frustrated': 2, 'annoyed': 2, 'upset': 2,
-                    'dissatisfied': 2, 'unhappy': 2, 'concerned': 2, 'worried': 2, 'uncomfortable': 2,
-                    'unprofessional': 1, 'rude': 1, 'disrespectful': 1, 'careless': 2, 'negligent': 1,
-                    'slow': 2, 'delayed': 2, 'late': 2, 'waiting': 2, 'wait': 2, 'long': 2,
-                    'expensive': 2, 'overpriced': 2, 'costly': 2, 'dirty': 1, 'unclean': 1, 'messy': 2,
-                    'untrained': 1, 'inexperienced': 2, 'unfriendly': 2, 'dismissive': 1, 'arrogant': 1,
-                    'insensitive': 1, 'cold': 2, 'harsh': 2, 'impatient': 2, 'rude': 2
+                    // Weight 1 - Severely negative
+                    'terrible': 1, 'awful': 1, 'horrible': 1, 'worst': 1, 'disgusting': 1,
+                    'appalling': 1, 'outrageous': 1, 'unacceptable': 1, 'shocking': 1, 'disgraceful': 1,
+                    'nightmare': 1, 'disaster': 1, 'catastrophic': 1, 'deplorable': 1, 'abysmal': 1,
+                    'pathetic': 1, 'useless': 1, 'worthless': 1, 'incompetent': 1, 'negligent': 1,
+                    'reckless': 1, 'dangerous': 1, 'harmful': 1, 'unsafe': 1, 'risky': 1,
+                    'unprofessional': 1, 'rude': 1, 'disrespectful': 1, 'arrogant': 1, 'dismissive': 1,
+                    'condescending': 1, 'insensitive': 1, 'callous': 1, 'heartless': 1, 'cruel': 1,
+                    'uncaring': 1, 'indifferent': 1, 'hostile': 1, 'aggressive': 1, 'abusive': 1,
+                    'discriminatory': 1, 'biased': 1, 'prejudiced': 1, 'unfair': 1, 'unjust': 1,
+                    'dirty': 1, 'filthy': 1, 'unsanitary': 1, 'contaminated': 1, 'infected': 1,
+                    'chaotic': 1, 'disorganized': 1, 'confused': 1, 'lost': 1, 'abandoned': 1,
+    
+                    // Weight 2 - Moderately negative
+                    'bad': 2, 'poor': 2, 'disappointing': 2, 'unsatisfactory': 2, 'inadequate': 2,
+                    'insufficient': 2, 'lacking': 2, 'deficient': 2, 'subpar': 2, 'below average': 2,
+                    'frustrated': 2, 'annoyed': 2, 'upset': 2, 'dissatisfied': 2, 'unhappy': 2,
+                    'displeased': 2, 'concerned': 2, 'worried': 2, 'anxious': 2, 'stressed': 2,
+                    'uncomfortable': 2, 'uneasy': 2, 'tense': 2, 'nervous': 2, 'scared': 2,
+                    'slow': 2, 'delayed': 2, 'late': 2, 'overdue': 2, 'behind': 2, 'frustrating': 2,
+                    'waiting': 2, 'lengthy': 2, 'prolonged': 2, 'extended': 2, 'excessive': 2,
+                    'expensive': 2, 'costly': 2, 'overpriced': 2, 'unaffordable': 2, 'steep': 2,
+                    'confusing': 2, 'unclear': 2, 'complicated': 2, 'difficult': 2, 'challenging': 2,
+                    'inconvenient': 2, 'inaccessible': 2, 'unavailable': 2, 'limited': 2, 'restricted': 2,
+                    'cold': 2, 'impersonal': 2, 'distant': 2, 'unfriendly': 2, 'unwelcoming': 2,
+                    'careless': 2, 'sloppy': 2, 'rushed': 2, 'hasty': 2, 'impatient': 2, 'sour': 2
                 };
 
                 const negativePatterns = [
-                    { pattern: /without empathy|no empathy|lack.*empathy/i, weight: 1, issue: 'lack of empathy' },
-                    { pattern: /never.*again|won't.*back|not.*returning/i, weight: 1, issue: 'will not return' },
-                    { pattern: /moving mountains|extremely difficult/i, weight: 1, issue: 'very reluctant to return' },
-                    { pattern: /counterproductive|makes no sense/i, weight: 2, issue: 'questions approach' },
-                    { pattern: /don't you think|shouldn't.*be/i, weight: 2, issue: 'rhetorical criticism' },
-                    { pattern: /how can.*\?/i, weight: 2, issue: 'questioning service' },
-                    { pattern: /treated.*badly|treated.*poorly|mistreated/i, weight: 1, issue: 'poor treatment' },
-                    { pattern: /staff.*problem|staff.*issue|staff.*rude/i, weight: 1, issue: 'staff problems' },
-                    { pattern: /waste.*time|wasted.*time/i, weight: 2, issue: 'time wasted' },
-                    { pattern: /no point|what's the point/i, weight: 1, issue: 'questioning value' }
+                    // Empathy and care issues
+                    { pattern: /without empathy|no empathy|lack.*empathy|lacks.*compassion/i, weight: 1, issue: 'lack of empathy' },
+                    { pattern: /don't care|doesn't care|uncaring|indifferent.*patients/i, weight: 1, issue: 'staff indifference' },
+                    { pattern: /treated.*like.*number|just.*another.*patient/i, weight: 1, issue: 'impersonal treatment' },
+                    
+                    // Service refusal and return intentions
+                    { pattern: /never.*again|won't.*back|not.*returning|avoid.*hospital/i, weight: 1, issue: 'will not return' },
+                    { pattern: /wouldn't.*recommend|can't.*recommend|advise.*against/i, weight: 1, issue: 'would not recommend' },
+                    { pattern: /find.*another.*hospital|go.*elsewhere|different.*hospital/i, weight: 1, issue: 'seeking alternatives' },
+                    { pattern: /everything.*seemed.*chaotic|chaotic.*situation/i, weight: 1, issue: 'organizational chaos' },
+                    { pattern: /something.*needs.*to.*be.*done|needs.*improvement/i, weight: 2, issue: 'service improvement needed' },
+                    { pattern: /started.*to.*go.*sour|went.*downhill|got.*worse/i, weight: 2, issue: 'declining experience' },
+                    
+                    // Medical care quality concerns
+                    { pattern: /misdiagnosed|wrong.*diagnosis|missed.*diagnosis/i, weight: 1, issue: 'diagnostic concerns' },
+                    { pattern: /medical.*error|mistake.*made|wrong.*medication/i, weight: 1, issue: 'medical errors' },
+                    { pattern: /infection.*acquired|hospital.*acquired|got.*sicker/i, weight: 1, issue: 'healthcare-associated infections' },
+                    
+                    // Wait time frustrations
+                    { pattern: /waited.*hours|waiting.*forever|endless.*wait/i, weight: 2, issue: 'excessive wait times' },
+                    { pattern: /emergency.*wait|urgent.*delay|critical.*delay/i, weight: 1, issue: 'emergency care delays' },
+                    { pattern: /appointment.*cancelled|surgery.*postponed|procedure.*delayed/i, weight: 2, issue: 'scheduling problems' },
+                    
+                    // Staff behavior issues
+                    { pattern: /staff.*rude|nurse.*rude|doctor.*dismissive/i, weight: 1, issue: 'staff rudeness' },
+                    { pattern: /treated.*badly|treated.*poorly|mistreated.*patient/i, weight: 1, issue: 'poor treatment by staff' },
+                    { pattern: /wouldn't.*listen|ignored.*concerns|dismissed.*symptoms/i, weight: 1, issue: 'patient concerns dismissed' },
+                    
+                    // Facility and safety concerns
+                    { pattern: /dirty.*room|unclean.*facility|unsanitary.*conditions/i, weight: 1, issue: 'cleanliness problems' },
+                    { pattern: /unsafe.*conditions|safety.*concern|dangerous.*situation/i, weight: 1, issue: 'safety issues' },
+                    { pattern: /broken.*equipment|faulty.*machine|equipment.*failure/i, weight: 1, issue: 'equipment problems' },
+                    
+                    // Communication failures
+                    { pattern: /no.*communication|poor.*communication|lack.*information/i, weight: 2, issue: 'communication breakdown' },
+                    { pattern: /nobody.*told|wasn't.*informed|left.*in.*dark/i, weight: 2, issue: 'lack of information' },
+                    { pattern: /conflicting.*information|mixed.*messages|confused.*instructions/i, weight: 2, issue: 'conflicting information' },
+                    { pattern: /no.*feedback|no.*information|wasn't.*told/i, weight: 2, issue: 'lack of information' },
+                    
+                    // Billing and cost issues
+                    { pattern: /surprise.*bill|unexpected.*charges|billing.*error/i, weight: 2, issue: 'billing problems' },
+                    { pattern: /can't.*afford|too.*expensive|financially.*burden/i, weight: 2, issue: 'cost concerns' },
+                    { pattern: /insurance.*denied|coverage.*refused|claim.*rejected/i, weight: 2, issue: 'insurance issues' },
+                    
+                    // General dissatisfaction
+                    { pattern: /waste.*time|wasted.*time|time.*wasting/i, weight: 2, issue: 'time wasted' },
+                    { pattern: /what's.*the.*point|no.*point|pointless.*visit/i, weight: 1, issue: 'questioning value of care' },
+                    { pattern: /how.*can.*you|why.*would.*you|don't.*understand.*how/i, weight: 2, issue: 'questioning practices' }
                 ];
 
                 const issueKeywords = [
+                    // Wait times and scheduling
                     'wait', 'waiting', 'delay', 'delayed', 'late', 'slow', 'long time', 'hours',
+                    'appointment', 'schedule', 'scheduling', 'booking', 'availability', 'cancelled', 'postponed',
+                    'emergency', 'urgent', 'triage', 'queue', 'backlog', 'long',
+                    
+                    // Staff and service
+                    'staff', 'nurse', 'doctor', 'physician', 'surgeon', 'specialist', 'technician',
+                    'receptionist', 'administration', 'security', 'housekeeping', 'management',
+                    'service', 'care', 'treatment', 'attention', 'bedside manner', 'communication',
                     'rude', 'unfriendly', 'unprofessional', 'dismissive', 'arrogant', 'cold',
-                    'dirty', 'unclean', 'messy', 'crowded', 'noisy',
-                    'expensive', 'cost', 'price', 'billing', 'payment', 'overpriced',
-                    'appointment', 'schedule', 'booking', 'availability', 'cancelled',
-                    'empathy', 'compassion', 'understanding', 'care', 'treatment',
-                    'staff', 'nurse', 'doctor', 'reception', 'service'
+                    'empathy', 'compassion', 'understanding', 'respect', 'dignity', 'chaotic', 'indifferenct',
+                    'unapologetic', 
+                    
+                    // Facility and environment
+                    'room', 'bed', 'bathroom', 'toilet', 'shower', 'privacy', 'noise', 'temperature',
+                    'dirty', 'unclean', 'messy', 'crowded', 'noisy', 'uncomfortable',
+                    'parking', 'elevator', 'wheelchair', 'accessibility', 'signage', 'directions',
+                    'food', 'meal', 'cafeteria', 'vending', 'visitor', 'visiting hours',
+                    
+                    // Medical care quality
+                    'diagnosis', 'misdiagnosis', 'medication', 'prescription', 'dosage', 'side effects',
+                    'procedure', 'surgery', 'operation', 'recovery', 'healing', 'infection',
+                    'pain', 'discomfort', 'symptoms', 'condition', 'illness', 'disease',
+                    'test', 'lab', 'results', 'scan', 'x-ray', 'blood work', 'biopsy',
+                    
+                    // Administrative and billing
+                    'billing', 'payment', 'insurance', 'coverage', 'copay', 'deductible',
+                    'expensive', 'cost', 'price', 'overpriced', 'charges', 'fees',
+                    'paperwork', 'forms', 'documentation', 'records', 'files', 'information',
+                    'discharge', 'admission', 'registration', 'check-in', 'check-out',
+                    
+                    // Technology and equipment
+                    'equipment', 'machine', 'monitor', 'IV', 'catheter', 'ventilator',
+                    'technology', 'system', 'computer', 'electronic', 'digital', 'online'
                 ];
 
                 let totalScore = 0;
